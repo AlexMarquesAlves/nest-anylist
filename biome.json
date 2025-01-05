@@ -1,7 +1,14 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
-  "files": { "ignoreUnknown": false, "ignore": [] },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "ignore": []
+  },
   "formatter": {
     "enabled": true,
     "useEditorconfig": true,
@@ -13,7 +20,9 @@
     "attributePosition": "auto",
     "bracketSpacing": true
   },
-  "organizeImports": { "enabled": true },
+  "organizeImports": {
+    "enabled": true
+  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -23,7 +32,10 @@
         "noUselessTypeConstraint": "error",
         "useArrowFunction": "off"
       },
-      "correctness": { "noUnusedVariables": "off", "useArrayLiterals": "off" },
+      "correctness": {
+        "noUnusedVariables": "off",
+        "useArrayLiterals": "off"
+      },
       "style": {
         "noNamespace": "error",
         "useAsConstAssertion": "error",
@@ -37,7 +49,9 @@
         "useNamespaceKeyword": "error"
       }
     },
-    "ignore": ["**/.eslintrc.js"]
+    "ignore": [
+      "**/.eslintrc.js"
+    ]
   },
   "javascript": {
     "formatter": {
@@ -51,6 +65,8 @@
       "attributePosition": "auto",
       "bracketSpacing": true
     },
-    "parser": { "unsafeParameterDecoratorsEnabled": true }
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
+    }
   }
 }
