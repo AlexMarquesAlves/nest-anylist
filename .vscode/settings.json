@@ -1,0 +1,30 @@
+{
+  "symbols.files.associations": {
+    "*.e2e-spec.ts": "jest",
+    "*.spec.ts": "jest",
+    "*.module.ts": "nest",
+    "*.service.ts": "nest",
+    "*.controller.ts": "nest"
+  },
+  "editor.defaultFormatter": "biomejs.biome",
+  "workbench.colorTheme": "Tokyo Night",
+  "cSpell.language": "en,pt,pt-BR,es,pt-PT",
+  "cSpell.words": [
+    "charmander",
+    "dependencias",
+    "Desarrollo",
+    "dockerized",
+    "escalable",
+    "Fernado",
+    "Instantiator",
+    "inyectar",
+    "MONGODB",
+    "pokeapi",
+    "pokedex",
+    "pokedexapp",
+    "pokemon",
+    "pokemons",
+    "pokemonsdb",
+    "Reponse"
+  ]
+}
