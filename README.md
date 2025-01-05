@@ -18,6 +18,7 @@ Teslo Shop is a API using [Nest](https://github.com/nestjs/nest) framework TypeS
 - Install [Docker](https://www.docker.com/) and Docker Compose
 - Clone this repository ```git clone https://github.com/AlexMarquesAlves/04-teslo-shop.git```
 - Open the directory folder that was cloned ```cd 04-teslo-shop```
+- Copy the `.env.example` file and rename it to `.env`, then fill in the variable values
 
 ## Project setup
 

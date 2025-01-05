@@ -8,6 +8,7 @@
   "scripts": {
     "build": "nest build",
     "check": "biome check --write src test",
+    "setup": "docker-compose up -d && nest start --watch",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
