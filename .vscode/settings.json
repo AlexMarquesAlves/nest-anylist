@@ -3,8 +3,11 @@
     "*.e2e-spec.ts": "jest",
     "*.spec.ts": "jest",
     "*.module.ts": "nest",
-    "*.service.ts": "nest",
-    "*.controller.ts": "nest"
+    "*.controller.ts": "nest-controller",
+    "*.service.ts": "nest-service",
+    ".env.development.local": "gear",
+    ".env.example": "gear",
+    ".env.production.local": "gear",
   },
   "editor.defaultFormatter": "biomejs.biome",
   "workbench.colorTheme": "Tokyo Night",
