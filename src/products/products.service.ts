@@ -32,12 +32,19 @@ export class ProductsService {
     }
   }
 
+  // TODO: Pagination
   async findAll() {
-    return `This action returns all products`
+    log(`This action returns a product`)
+
+    const products = await this.productRepository.find()
+    return products
   }
 
-  async findOne(id: number) {
-    return `This action returns a #${id} product`
+  async findOne(id: string) {
+    log(`This action returns a #${id} product`)
+
+    const product = await this.productRepository.findOneBy({ id })
+    return product
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
