@@ -55,8 +55,12 @@ export class ProductsService {
     return `This action updates a #${id} product`
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} product`
+  async remove(id: string) {
+    log(`This action removes a #${id} product`)
+    const product = await this.findOne(id)
+    await this.productRepository.remove(product)
+
+    return
   }
 
   private handleDBExceptions(error: any) {
