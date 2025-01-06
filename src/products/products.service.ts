@@ -1,3 +1,4 @@
+import { log } from 'console'
 import {
   BadRequestException,
   Injectable,
@@ -6,7 +7,6 @@ import {
   NotFoundException,
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { log } from 'console'
 import type { PaginationDto } from 'src/common/dto/pagination.dto'
 import type { Repository } from 'typeorm'
 import { validate as isUUID } from 'uuid'
