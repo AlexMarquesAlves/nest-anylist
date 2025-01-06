@@ -4,6 +4,7 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import type { Repository } from 'typeorm'
@@ -44,6 +45,9 @@ export class ProductsService {
     log(`This action returns a #${id} product`)
 
     const product = await this.productRepository.findOneBy({ id })
+    if (!product)
+      throw new NotFoundException(`Product with id ${id} not found.`)
+
     return product
   }
 
