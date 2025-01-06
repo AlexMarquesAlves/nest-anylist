@@ -33,7 +33,10 @@ export class Product {
   checkSlugInsert() {
     if (!this.slug) this.slug === this.title
 
-    this.slug = this.slug.toLowerCase().replaceAll(' ', '_').replaceAll(`'`, ``)
+    this.slug = this.slug
+      .toLowerCase()
+      .replaceAll(/\s/g, '_')
+      .replaceAll(/'/g, '')
   }
 
   // @BeforeUpdate()
