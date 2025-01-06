@@ -7,6 +7,7 @@ import {
   NotFoundException,
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import type { PaginationDto } from 'src/common/dto/pagination.dto'
 import type { Repository } from 'typeorm'
 import { CreateProductDto } from './dto/create-product.dto'
 import { UpdateProductDto } from './dto/update-product.dto'
@@ -34,10 +35,15 @@ export class ProductsService {
   }
 
   // TODO: Pagination
-  async findAll() {
+  async findAll(paginationDto: PaginationDto) {
+    const { limit = 10, offset = 0 } = paginationDto
     log(`This action returns a product`)
 
-    const products = await this.productRepository.find()
+    const products = await this.productRepository.find({
+      take: limit,
+      skip: offset,
+      // TODO: Relaciones
+    })
     return products
   }
 
