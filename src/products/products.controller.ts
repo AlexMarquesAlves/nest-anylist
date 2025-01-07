@@ -9,7 +9,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common'
-import type { PaginationDto } from 'src/common/dto/pagination.dto'
+import { PaginationDto } from './../common/dtos/pagination.dto'
 import { CreateProductDto } from './dto/create-product.dto'
 import { UpdateProductDto } from './dto/update-product.dto'
 import { ProductsService } from './products.service'
@@ -25,6 +25,7 @@ export class ProductsController {
 
   @Get()
   findAll(@Query() paginationDto: PaginationDto) {
+    // console.log(paginationDto)
     return this.productsService.findAll(paginationDto)
   }
 

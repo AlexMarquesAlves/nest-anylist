@@ -3,45 +3,55 @@ import {
   BeforeUpdate,
   Column,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import { ProductImage } from './'
 
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
-  @Column('text', { unique: true })
+  @Column('text', {
+    unique: true,
+  })
   title: string
 
-  @Column('float', { default: 0 })
+  @Column('float', {
+    default: 0,
+  })
   price: number
 
-  @Column({ type: 'text', nullable: true })
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
   description: string
 
-  @Column('text', { unique: true })
+  @Column('text', {
+    unique: true,
+  })
   slug: string
 
-  @Column('int', { default: 0 })
+  @Column('int', {
+    default: 0,
+  })
   stock: number
 
-  @Column('text', { array: true })
+  @Column('text', {
+    array: true,
+  })
   sizes: string[]
 
   @Column('text')
   gender: string
 
-  @Column('text', { array: true, default: [] })
+  @Column('text', {
+    array: true,
+    default: [],
+  })
   tags: string[]
 
   // images
-  @OneToMany(() => ProductImage, (productImage) => productImage.product, {
-    cascade: true,
-  })
-  images?: ProductImage[]
 
   @BeforeInsert()
   checkSlugInsert() {
@@ -49,17 +59,11 @@ export class Product {
       this.slug = this.title
     }
 
-    this.slug = this.slug
-      .toLowerCase()
-      .replaceAll(/\s/g, '_')
-      .replaceAll(/'/g, '')
+    this.slug = this.slug.toLowerCase().replaceAll(' ', '_').replaceAll("'", '')
   }
 
   @BeforeUpdate()
   checkSlugUpdate() {
-    this.slug = this.slug
-      .toLowerCase()
-      .replaceAll(/\s/g, '_')
-      .replaceAll(/'/g, '')
+    this.slug = this.slug.toLowerCase().replaceAll(' ', '_').replaceAll("'", '')
   }
 }
