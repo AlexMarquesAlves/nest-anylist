@@ -1,4 +1,3 @@
-import { log } from 'console'
 import {
   BadRequestException,
   Injectable,
@@ -7,6 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { log } from 'console'
 import type { PaginationDto } from 'src/common/dto/pagination.dto'
 import type { Repository } from 'typeorm'
 import { validate as isUUID } from 'uuid'
@@ -26,7 +26,14 @@ export class ProductsService {
     log('This action adds a new product')
 
     try {
-      const product = this.productRepository.create(createProductDto)
+      const {
+        images: [],
+        ...productDetails
+      } = createProductDto
+      const product = this.productRepository.create({
+        ...productDetails,
+        images: [],
+      })
       await this.productRepository.save(product)
 
       return product
@@ -75,6 +82,7 @@ export class ProductsService {
     const product = await this.productRepository.preload({
       id: id,
       ...updateProductDto,
+      images: [],
     })
 
     if (!product)
