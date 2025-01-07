@@ -1,4 +1,6 @@
 {
+  "window.zoomLevel": 1,
+  "npm.packageManager": "yarn",
   "symbols.files.associations": {
     "*.e2e-spec.ts": "jest",
     "*.spec.ts": "jest",
@@ -34,5 +36,14 @@
     "TESLO",
     "teslodb"
   ],
-  "window.zoomLevel": 1
+  "cSpell.customDictionaries": {
+    "project-words": {
+      "name": "project-words",
+      "path": "${workspaceRoot}/project-words.txt",
+      "description": "Words used in this project",
+      "addWords": true
+    },
+    "custom": true, // Enable the `custom` dictionary
+    "internal-terms": false // Disable the `internal-terms` dictionary
+  },
 }
