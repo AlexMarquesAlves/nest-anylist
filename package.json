@@ -6,6 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "codeLinter": "yarn run format && yarn run lint && yarn run check",
     "build": "nest build",
     "check": "biome check --write src test",
     "setup": "docker-compose up -d && nest start --watch",
