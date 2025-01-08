@@ -23,6 +23,7 @@ Teslo Shop is a API using [Nest](https://github.com/nestjs/nest) framework TypeS
 - Clone this repository ```git clone https://github.com/AlexMarquesAlves/04-teslo-shop.git```
 - Open the directory folder that was cloned ```cd 04-teslo-shop```
 - Copy the `.env.example` file and rename it to `.env`, then fill in the variable values
+- Run the seed GET request ```http://localhost:{PORT}/api/seed``` to populate database
 
 ## Project setup
 
