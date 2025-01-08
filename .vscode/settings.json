@@ -1,7 +1,12 @@
 {
   "window.zoomLevel": 1,
   "npm.packageManager": "yarn",
+  "symbols.folders.associations": {
+    "data": "folder-database",
+    "seed": "folder-providers",
+  },
   "symbols.files.associations": {
+    "seed-data.ts": "database",
     "*.e2e-spec.ts": "jest",
     "*.spec.ts": "jest",
     "*.module.ts": "nest",
@@ -14,28 +19,6 @@
   "editor.defaultFormatter": "biomejs.biome",
   "workbench.colorTheme": "Tokyo Night",
   "cSpell.language": "en,pt,pt-BR,es,pt-PT",
-  "cSpell.words": [
-    "charmander",
-    "dependencias",
-    "Desarrollo",
-    "dockerized",
-    "dtos",
-    "escalable",
-    "Fernado",
-    "Instantiator",
-    "inyectar",
-    "MONGODB",
-    "pokeapi",
-    "pokedex",
-    "pokedexapp",
-    "pokemon",
-    "pokemons",
-    "pokemonsdb",
-    "Reponse",
-    "teslo",
-    "TESLO",
-    "teslodb"
-  ],
   "cSpell.customDictionaries": {
     "project-words": {
       "name": "project-words",
