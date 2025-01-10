@@ -1,6 +1,6 @@
-import { BadGatewayException, Injectable } from '@nestjs/common'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
+import { BadGatewayException, Injectable } from '@nestjs/common'
 
 @Injectable()
 export class FilesService {
