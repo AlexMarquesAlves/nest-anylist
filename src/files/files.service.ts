@@ -11,9 +11,4 @@ export class FilesService {
       throw new BadGatewayException(`No product found with image ${imageName}`)
     return path
   }
-
-  uploadProductImage() {
-    // upload product image logic
-    return `Hello, World!`
-  }
 }
