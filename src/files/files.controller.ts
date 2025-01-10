@@ -1,6 +1,8 @@
 import {
   BadRequestException,
   Controller,
+  Get,
+  Param,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -13,6 +15,11 @@ import { fileFilter, fileNamer } from './helpers'
 @Controller('files')
 export class FilesController {
   constructor(private readonly filesService: FilesService) {}
+
+  @Get('/product:imageName')
+  findProductImage(@Param('imageName') imageName: string) {
+    return { imageName }
+  }
 
   @Post('product')
   @UseInterceptors(
@@ -29,10 +36,10 @@ export class FilesController {
     if (!file) {
       throw new BadRequestException('Make sure the file is a valid image')
     }
+    const secureUrl = `${file.filename}`
 
     return {
-      fileName: file.originalname,
-      mimetype: file.mimetype,
+      secureUrl,
     }
   }
 }
