@@ -23,9 +23,9 @@ import { SeedModule } from './seed/seed.module'
       synchronize: true,
     }),
 
-    // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '..', 'public'),
-    // }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
 
     ProductsModule,
 
