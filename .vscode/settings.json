@@ -1,5 +1,11 @@
 {
+  "editor.defaultFormatter": "biomejs.biome",
+  "workbench.colorTheme": "Tokyo Night",
   "npm.packageManager": "yarn",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "always",
+    "source.organizeImports": "always",
+  },
   "symbols.folders.associations": {
     "data": "folder-database",
     "seed": "folder-providers",
@@ -15,8 +21,6 @@
     ".env.example": "gear",
     ".env.production.local": "gear",
   },
-  "editor.defaultFormatter": "biomejs.biome",
-  "workbench.colorTheme": "Tokyo Night",
   "cSpell.language": "en,pt,pt-BR,es,pt-PT",
   "cSpell.customDictionaries": {
     "project-words": {
