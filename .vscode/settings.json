@@ -1,5 +1,4 @@
 {
-  "window.zoomLevel": 1,
   "npm.packageManager": "yarn",
   "symbols.folders.associations": {
     "data": "folder-database",
