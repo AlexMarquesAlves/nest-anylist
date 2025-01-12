@@ -1,8 +1,8 @@
-import { join } from 'node:path'
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { join } from 'node:path'
 import { AuthModule } from './auth/auth.module'
 import { CommonModule } from './common/common.module'
 import { FilesModule } from './files/files.module'
@@ -29,13 +29,9 @@ import { SeedModule } from './seed/seed.module'
     }),
 
     ProductsModule,
-
     CommonModule,
-
     SeedModule,
-
     FilesModule,
-
     AuthModule,
   ],
 })
