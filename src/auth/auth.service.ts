@@ -1,6 +1,10 @@
-import { Injectable } from '@nestjs/common'
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import type { Repository } from 'typeorm'
+import { Repository } from 'typeorm'
 import { CreateUserDto } from './dto'
 import { User } from './entities/user.entity'
 
@@ -14,8 +18,23 @@ export class AuthService {
   async create(createUserDto: CreateUserDto) {
     try {
       const user = this.userRepository.create(createUserDto)
+
       await this.userRepository.save(user)
-      return user
-    } catch (error) {}
+
+      return {
+        user,
+      }
+      // TODO: Retornar el JWT de acceso
+    } catch (error) {
+      this.handleDBErrors(error)
+    }
+  }
+
+  private handleDBErrors(error: any): never {
+    if (error.code === '23505') throw new BadRequestException(error.detail)
+
+    console.log(error)
+
+    throw new InternalServerErrorException('Please check server logs')
   }
 }
