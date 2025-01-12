@@ -5,18 +5,18 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
-  @Column('')
+  @Column({ type: 'text', unique: true })
   email: string
 
-  @Column('')
+  @Column({ type: 'text' })
   password: string
 
-  @Column('')
+  @Column({ type: 'text' })
   fullName: string
 
-  @Column('')
+  @Column({ type: 'bool', unique: true })
   isActive: boolean
 
-  @Column('')
+  @Column({ type: 'text', array: true, default: ['user'] })
   roles: string[]
 }
