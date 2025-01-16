@@ -1,10 +1,14 @@
 {
-  "name": "teslo-shop",
+  "name": "nest-todo",
   "version": "0.0.1",
-  "description": "",
+  "description": "A simple exercise todo app applying graphQL",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22.12.0",
+    "npm": ">=11.0.0"
+  },
   "scripts": {
     "codeLinter": "yarn run format && yarn run lint && yarn run check",
     "build": "nest build",
