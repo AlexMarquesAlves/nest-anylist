@@ -18,6 +18,7 @@
     "*.e2e-spec.ts": "jest",
     "*.spec.ts": "jest",
     "*.module.ts": "nest",
+    "*.resolver.ts": "nest",
     "*.controller.ts": "nest-controller",
     "*.service.ts": "nest-service",
     ".env.development.local": "gear",
