@@ -17,9 +17,11 @@ export class HelloWorldResolver {
 
   @Query(() => Int, {
     name: `randomFromZeroTo`,
-    description: `returns a random number from 0 --> TO`,
+    description: `returns a random number from 0 --> TO (default is 6)`,
   })
-  getRandomFromZeroTo(@Args('to') to: number): number {
+  getRandomFromZeroTo(
+    @Args('to', { nullable: true, type: () => Int }) to: number = 6
+  ): number {
     return Math.floor(Math.random() * (to + 1))
   }
 }
