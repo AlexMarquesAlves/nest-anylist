@@ -4,7 +4,7 @@ import { Todo } from './entity/todo.entity'
 @Resolver()
 export class TodoResolver {
   @Query(() => [Todo], { name: 'TODOs' })
-  findAll() {
+  findAll(): Todo[] {
     return this.todoService.findAll()
   }
 
