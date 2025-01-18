@@ -12,7 +12,7 @@ export class TodoService {
     // {id: 6, description: 'Gema de la mente', done: false}
   ]
 
-  findAll() {
+  findAll(): Todo[] {
     return this.todos
   }
 

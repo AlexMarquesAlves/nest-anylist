@@ -3,10 +3,14 @@
 # ------------------------------------------------------
 
 type Query {
-  """Hola mundo es lo que retorna"""
+  """
+  Hola mundo es lo que retorna
+  """
   hello: String!
   randomNumber: Float!
 
-  """returns a random number from 0 --> TO (default is 6)"""
+  """
+  returns a random number from 0 --> TO (default is 6)
+  """
   randomFromZeroTo(to: Int): Int!
 }
