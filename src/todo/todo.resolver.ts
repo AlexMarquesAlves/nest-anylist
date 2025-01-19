@@ -18,7 +18,7 @@ export class TodoResolver {
   }
 
   @Mutation(() => Todo, { name: 'create to do' })
-  createTodo(@Args('dataTodoACrear') createTodoInput: CreateTodoInput) {
+  createTodo(@Args('createTodoInput') createTodoInput: CreateTodoInput) {
     return this.todoService.createTodo(createTodoInput)
   }
 
