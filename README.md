@@ -10,29 +10,26 @@
 
 <br/>
 <br/>
-<h1 align='center'>TESLO SHOP API</h1>
+<h1 align='center'>Nest TO DO Exercise</h1>
 <br/>
 
 ## Description
 
-Teslo Shop is a API using [Nest](https://github.com/nestjs/nest) framework TypeScript.
+Nest To Do is a API exercise using [Nest](https://github.com/nestjs/nest) framework TypeScript and [GraphQL](https://graphql.org/).
 
 ## Before setup
-- Make sure you already have [Node.js](https://nodejs.org/)  and npm installed
-- Install [Docker](https://www.docker.com/) and Docker Compose
-- Clone this repository ```git clone https://github.com/AlexMarquesAlves/04-teslo-shop.git```
-- Open the directory folder that was cloned ```cd 04-teslo-shop```
-- Copy the `.env.example` file and rename it to `.env`, then fill in the variable values
 
+- Make sure you already have [Node.js](https://nodejs.org/) and npm installed
+<!-- - Install [Docker](https://www.docker.com/) and Docker Compose -->
+- Clone this repository `git clone https://github.com/AlexMarquesAlves/Nest-todo.git`
+- Open the directory folder that was cloned `cd Nest-todo`
+<!-- - Copy the `.env.example` file and rename it to `.env`, then fill in the variable values -->
 
 ## Project setup
 
 ```bash
 # Install dependencies
 $ npm install || $ yarn install
-
-# Start the database
-$ docker-compose up -d
 ```
 
 ## Compile and run the project
@@ -41,10 +38,6 @@ $ docker-compose up -d
 # development
 $ npm run start:dev || $ yarn run start:dev
 
-# Run SEED GET Request
-http://localhost:3000/api/seed
-
 # production mode
 $ npm run start:prod || $ yarn run start:prod
 ```
-
