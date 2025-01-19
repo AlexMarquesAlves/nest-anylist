@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import type { Todo } from './entity/todo.entity'
+import type { CreateTodoInput } from './dto/inputs/create-todo.input'
+import { Todo } from './entity/todo.entity'
 
 @Injectable()
 export class TodoService {
@@ -24,8 +25,13 @@ export class TodoService {
     return todo
   }
 
-  createTodo() {
-    throw new Error('Method not implemented.')
+  createTodo(createTodoInput: CreateTodoInput): Todo {
+    const todo = new Todo()
+    todo.description = createTodoInput.description
+    todo.id = Math.max(...this.todos.map((todo) => todo.id), 0) + 1
+
+    this.todos.push(todo)
+    return todo
   }
 
   updateTodo() {
