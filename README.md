@@ -10,26 +10,29 @@
 
 <br/>
 <br/>
-<h1 align='center'>Nest TO DO Exercise</h1>
+<h1 align='center'>Nest Anylist</h1>
 <br/>
 
 ## Description
 
-Nest To Do is a API exercise using [Nest](https://github.com/nestjs/nest) framework TypeScript and [GraphQL](https://graphql.org/).
+Nest Anylist is a API using [Nest](https://github.com/nestjs/nest) framework TypeScript and [GraphQL](https://graphql.org/).
 
 ## Before setup
 
 - Make sure you already have [Node.js](https://nodejs.org/) and npm installed
-<!-- - Install [Docker](https://www.docker.com/) and Docker Compose -->
-- Clone this repository `git clone https://github.com/AlexMarquesAlves/Nest-todo.git`
-- Open the directory folder that was cloned `cd Nest-todo`
-<!-- - Copy the `.env.example` file and rename it to `.env`, then fill in the variable values -->
+- Install [Docker](https://www.docker.com/) and Docker Compose
+- Clone this repository `git clone https://github.com/AlexMarquesAlves/nest-anylist.git`
+- Open the directory folder that was cloned `cd nest-anylist`
+- Copy the `.env.example` file and rename it to `.env`, then fill in the variable values
 
 ## Project setup
 
 ```bash
 # Install dependencies
 $ npm install || $ yarn install
+
+# Upload the database
+$ docker-compose up -d
 ```
 
 ## Compile and run the project
