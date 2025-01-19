@@ -1,6 +1,5 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
-import type { StatusArgs } from './dto/args/status.args'
-import type { CreateTodoInput, UpdateTodoInput } from './dto/inputs'
+import type { CreateTodoInput, StatusArgs, UpdateTodoInput } from './dto'
 import { Todo } from './entity/todo.entity'
 import type { TodoService } from './todo.service'
 
