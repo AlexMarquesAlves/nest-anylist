@@ -8,7 +8,9 @@ export class TodoResolver {
   constructor(private readonly todoService: TodoService) {}
 
   @Query(() => [Todo], { name: "TO DO's" })
-  findAll(): Todo[] {
+  findAll() //? @Args('limit', { type: () => Int }) limit: number,
+  //? @Args('offset', { type: () => Int }) offset: number
+  : Todo[] {
     return this.todoService.findAll()
   }
 
