@@ -1,8 +1,8 @@
 {
-  "name": "nest-todo",
+  "name": "nest-anylist",
   "version": "0.0.1",
-  "description": "A simple exercise todo app applying graphQL",
-  "author": "",
+  "description": "",
+  "author": "¡Duque",
   "private": true,
   "license": "UNLICENSED",
   "engines": {

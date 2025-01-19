@@ -2,15 +2,29 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Query {
-  """
-  Hola mundo es lo que retorna
-  """
-  hello: String!
-  randomNumber: Float!
+type Item {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
 
-  """
-  returns a random number from 0 --> TO (default is 6)
-  """
-  randomFromZeroTo(to: Int): Int!
+type Query {
+  items: [Item!]!
+  item(id: Int!): Item!
+}
+
+type Mutation {
+  createItem(createItemInput: CreateItemInput!): Item!
+  updateItem(updateItemInput: UpdateItemInput!): Item!
+  removeItem(id: Int!): Item!
+}
+
+input CreateItemInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateItemInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }

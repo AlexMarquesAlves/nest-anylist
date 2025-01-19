@@ -1,6 +1,5 @@
 {
   "editor.defaultFormatter": "biomejs.biome",
-  "workbench.colorTheme": "Tokyo Night",
   "npm.packageManager": "yarn",
   "editor.codeActionsOnSave": {
     "source.fixAll": "always",
