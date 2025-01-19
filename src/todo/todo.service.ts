@@ -35,7 +35,16 @@ export class TodoService {
   }
 
   updateTodo(updateTodoInput: UpdateTodoInput): Todo {
-    throw new Error('Method not implemented.')
+    const { id, description, done } = updateTodoInput
+    const todoToUpdate = this.findOne(id)
+
+    if (description) todoToUpdate.description = description
+    if (done !== undefined) todoToUpdate.done = done
+
+    this.todos = this.todos.map((todo) => {
+      if (todo.id === id) return todoToUpdate
+      return todo
+    })
   }
 
   removeTodo() {
