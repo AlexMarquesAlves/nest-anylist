@@ -16,6 +16,12 @@ export class TodoService {
   get totalTodos() {
     return this.todos.length
   }
+  get totalDoneTodos() {
+    return this.todos.filter((todo) => todo.done).length
+  }
+  get totalUndoneTodos() {
+    return this.todos.filter((todo) => !todo.done).length
+  }
 
   findAll(statusArgs: StatusArgs): Todo[] {
     const { status } = statusArgs

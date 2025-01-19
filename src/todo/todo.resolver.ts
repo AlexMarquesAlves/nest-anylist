@@ -41,4 +41,16 @@ export class TodoResolver {
   totalTodos(): number {
     return this.todoService.totalTodos
   }
+
+  // * Completed Todos
+  @Query(() => Int, { name: "total completed to do's" })
+  totalCompletedTodos(): number {
+    return this.todoService.totalDoneTodos
+  }
+
+  // * Pending Todos
+  @Query(() => Int, { name: "total pending to do's" })
+  totalPendingTodos(): number {
+    return this.todoService.totalUndoneTodos
+  }
 }
