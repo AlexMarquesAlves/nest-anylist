@@ -1,4 +1,5 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
+import type { StatusArgs } from './dto/args/status.args'
 import type { CreateTodoInput, UpdateTodoInput } from './dto/inputs'
 import { Todo } from './entity/todo.entity'
 import type { TodoService } from './todo.service'
@@ -8,10 +9,12 @@ export class TodoResolver {
   constructor(private readonly todoService: TodoService) {}
 
   @Query(() => [Todo], { name: "TO DO's" })
-  findAll() //? @Args('limit', { type: () => Int }) limit: number,
-  //? @Args('offset', { type: () => Int }) offset: number
-  : Todo[] {
-    return this.todoService.findAll()
+  findAll(
+    //? @Args('limit', { type: () => Int }) limit: number,
+    //? @Args('offset', { type: () => Int }) offset: number
+    @Args() statusArgs: StatusArgs
+  ): Todo[] {
+    return this.todoService.findAll(statusArgs)
   }
 
   @Query(() => Todo, { name: 'To do' })
