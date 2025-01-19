@@ -35,4 +35,10 @@ export class TodoResolver {
   removeTodo(@Args('id', { type: () => Int }) id: number) {
     return this.todoService.removeTodo(id)
   }
+
+  // ? Aggregation
+  @Query(() => Int, { name: "total to do's" })
+  totalTodos(): number {
+    return this.todoService.totalTodos
+  }
 }

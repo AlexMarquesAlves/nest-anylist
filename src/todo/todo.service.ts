@@ -8,10 +8,14 @@ export class TodoService {
     { id: 1, description: 'Gema del alma', done: false },
     { id: 2, description: 'Gema del espacio', done: true },
     { id: 3, description: 'Gema del poder', done: false },
-    // {id: 4, description: 'Gema del tiempo', done: false},
+    { id: 4, description: 'Gema del tiempo', done: false },
     // {id: 5, description: 'Gema de la realidad', done: false},
     // {id: 6, description: 'Gema de la mente', done: false}
   ]
+
+  get totalTodos() {
+    return this.todos.length
+  }
 
   findAll(statusArgs: StatusArgs): Todo[] {
     const { status } = statusArgs
