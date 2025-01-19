@@ -42,9 +42,10 @@ export class TodoService {
     if (done !== undefined) todoToUpdate.done = done
 
     this.todos = this.todos.map((todo) => {
-      if (todo.id === id) return todoToUpdate
-      return todo
+      return todo.id === id ? todoToUpdate : todo
     })
+
+    return todoToUpdate
   }
 
   removeTodo() {
