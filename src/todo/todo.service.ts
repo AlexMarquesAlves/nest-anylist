@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import type { CreateTodoInput } from './dto/inputs/create-todo.input'
+import type { CreateTodoInput, UpdateTodoInput } from './dto/inputs'
 import { Todo } from './entity/todo.entity'
 
 @Injectable()
@@ -34,7 +34,7 @@ export class TodoService {
     return todo
   }
 
-  updateTodo() {
+  updateTodo(updateTodoInput: UpdateTodoInput): Todo {
     throw new Error('Method not implemented.')
   }
 
