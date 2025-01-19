@@ -34,8 +34,8 @@ export class TodoService {
     return todo
   }
 
-  updateTodo(updateTodoInput: UpdateTodoInput): Todo {
-    const { id, description, done } = updateTodoInput
+  updateTodo(id: number, updateTodoInput: UpdateTodoInput): Todo {
+    const { description, done } = updateTodoInput
     const todoToUpdate = this.findOne(id)
 
     if (description) todoToUpdate.description = description
