@@ -22,7 +22,7 @@ export class TodoResolver {
     return this.todoService.createTodo(createTodoInput)
   }
 
-  @Query(() => [String])
+  @Mutation(() => Todo, { name: 'update to do' })
   updateTodo() {
     return this.todoService.updateTodo()
   }
