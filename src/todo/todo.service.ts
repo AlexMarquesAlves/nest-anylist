@@ -48,7 +48,10 @@ export class TodoService {
     return todoToUpdate
   }
 
-  removeTodo() {
-    throw new Error('Method not implemented.')
+  removeTodo(id: number): Boolean {
+    const todo = this.findOne(id)
+    this.todos = this.todos.filter((todo) => todo.id !== id)
+
+    return true
   }
 }
