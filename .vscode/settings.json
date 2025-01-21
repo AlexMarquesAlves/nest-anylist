@@ -2,10 +2,8 @@
   "editor.defaultFormatter": "biomejs.biome",
   "npm.packageManager": "yarn",
   "editor.codeActionsOnSave": {
-    "source.fixAll": "always",
-    "source.organizeImports": "always",
-    "source.organizeImports.biome": "always",
     "source.fixAll.biome": "always",
+    "source.organizeImports.biome": "always",
     "source.removeUnusedImports.biome": "always"
   },
   "symbols.folders.associations": {
