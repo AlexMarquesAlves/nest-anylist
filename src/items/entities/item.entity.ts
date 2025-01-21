@@ -16,9 +16,9 @@ export class Item {
   @Field(() => Float) // * GraphQL decorators
   quantity: number
 
-  @Column() // * TypeORM decorators
-  @Field(() => String) // * GraphQL decorators
-  quantityUnits: string //  g, ml, kg, tsp
+  @Column({ nullable: true }) // * TypeORM decorators
+  @Field(() => String, { nullable: true }) // * GraphQL decorators
+  quantityUnits?: string //  g, ml, kg, tsp
 
   // ? stores
   // ? users
