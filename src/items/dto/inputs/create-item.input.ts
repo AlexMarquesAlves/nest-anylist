@@ -1,7 +1,19 @@
-import { Field, InputType, Int } from '@nestjs/graphql'
+import { Field, Float, InputType } from '@nestjs/graphql'
+import { IsNotEmpty, IsOptional, IsPositive, IsString } from 'class-validator'
 
 @InputType()
 export class CreateItemInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number
+  @Field(() => String, {}) // * GraphQL decorators
+  @IsString() // * Class validator decorators
+  @IsNotEmpty()
+  name: string
+
+  @Field(() => Float, {}) // * GraphQL decorators
+  @IsPositive() // * Class validator decorators
+  quantity: number
+
+  @Field(() => String, { nullable: true }) // * GraphQL decorators
+  @IsString() // * Class validator decorators
+  @IsOptional()
+  quantityUnits?: string
 }
