@@ -1,6 +1,5 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CreateItemInput } from './dto/create-item.input'
-import { UpdateItemInput } from './dto/update-item.input'
+import { CreateItemInput, UpdateItemInput } from './dto/inputs'
 import { Item } from './entities/item.entity'
 import { ItemsService } from './items.service'
 
