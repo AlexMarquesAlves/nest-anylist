@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config'
 import { GraphQLModule } from '@nestjs/graphql'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ItemsModule } from './items/items.module'
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -31,6 +32,8 @@ import { ItemsModule } from './items/items.module'
     }),
 
     ItemsModule,
+
+    UsersModule,
   ],
   controllers: [],
   providers: [],
