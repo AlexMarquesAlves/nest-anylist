@@ -20,7 +20,7 @@ export class ItemsResolver {
   }
 
   @Query(() => Item, { name: 'item' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  async findOne(@Args('id', { type: () => String }) id: string) {
     return this.itemsService.findOne(id)
   }
 
