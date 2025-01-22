@@ -1,4 +1,4 @@
-import { Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Mutation, Resolver } from '@nestjs/graphql'
 import { AuthService } from './auth.service'
 
 @Resolver()
@@ -9,13 +9,14 @@ export class AuthResolver {
   async signUp(): Promise<unknown> {
     return this.authService.signUp()
   }
-  @Mutation(/* ??? */ { name: 'login' })
-  async login(): Promise<unknown> {
-    return this.authService.login()
-  }
 
-  @Query(/** ?? */ { name: 'revalidate' })
-  async revalidateToken(): Promise<unknown> {
-    return this.authService.revalidateToken()
-  }
+  // @Mutation(/* ??? */ { name: 'login' })
+  // async login(): Promise<unknown> {
+  //   return this.authService.login()
+  // }
+
+  // @Query(/** ?? */ { name: 'revalidate' })
+  // async revalidateToken(): Promise<unknown> {
+  //   return this.authService.revalidateToken()
+  // }
 }
