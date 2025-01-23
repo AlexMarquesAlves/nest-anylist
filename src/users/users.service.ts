@@ -3,6 +3,7 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import * as bcrypt from 'bcrypt'
@@ -44,7 +45,12 @@ export class UsersService {
     try {
       return await this.userRepository.findOneByOrFail({ email })
     } catch (error) {
-      this.handleBDErrors(error)
+      throw new NotFoundException(`${email} not found`)
+
+      // this.handleBDErrors({
+      //   code: 'error-001',
+      //   detail: `${email} not found`,
+      // })
     }
   }
 
@@ -55,6 +61,10 @@ export class UsersService {
   private handleBDErrors(error: any): never {
     if (error.code === '23505') {
       throw new BadRequestException(error.detail.replace('Key ', ''))
+    }
+
+    if (error.code == 'error-001') {
+      throw new BadRequestException(error.detail.replace('Key', ''))
     }
     this.logger.error(error)
 
