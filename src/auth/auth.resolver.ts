@@ -14,10 +14,12 @@ export class AuthResolver {
     return this.authService.signUp(signUpInput)
   }
 
-  // @Mutation(/* ??? */ { name: 'login' })
-  // async login(): Promise<unknown> {
-  //   return this.authService.login()
-  // }
+  @Mutation(() => AuthResponse, { name: 'login' })
+  async login(
+    @Args('loginInput') loginInput: LoginInput
+  ): Promise<AuthResponse> {
+    return this.authService.login(loginInput)
+  }
 
   // @Query(/** ?? */ { name: 'revalidate' })
   // async revalidateToken(): Promise<unknown> {
