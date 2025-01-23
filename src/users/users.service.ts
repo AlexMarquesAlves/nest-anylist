@@ -40,16 +40,23 @@ export class UsersService {
     throw new Error('Method not implemented.')
   }
 
+  async findOneByEmail(email: string): Promise<User> {
+    try {
+      return await this.userRepository.findOneByOrFail({ email })
+    } catch (error) {
+      this.handleBDErrors(error)
+    }
+  }
+
   block(id: string): Promise<User> {
     throw new Error('Method not implemented.')
   }
 
   private handleBDErrors(error: any): never {
-    this.logger.error(error)
-
     if (error.code === '23505') {
       throw new BadRequestException(error.detail.replace('Key ', ''))
     }
+    this.logger.error(error)
 
     throw new InternalServerErrorException(`Check server logs`)
   }

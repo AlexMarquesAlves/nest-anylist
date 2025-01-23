@@ -1,6 +1,6 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { AuthService } from './auth.service'
-import type { SignUpInput } from './dto/inputs/signup.input'
+import type { LoginInput, SignUpInput } from './dto/inputs'
 import { AuthResponse } from './types/auth-response.type'
 
 @Resolver()

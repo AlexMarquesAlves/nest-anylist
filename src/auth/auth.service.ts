@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import type { UsersService } from 'src/users/users.service'
+import type { LoginInput } from './dto/inputs'
 import type { SignUpInput } from './dto/inputs/signup.input'
 import type { AuthResponse } from './types/auth-response.type'
 
@@ -15,8 +16,13 @@ export class AuthService {
     return { token, user }
   }
 
-  login(): Promise<unknown> {
-    throw new Error('Method not implemented.')
+  async login(loginInput: LoginInput): Promise<AuthResponse> {
+    const { email, password } = loginInput
+    const user = await this.usersService.findOneByEmail(email)
+
+    const token = 'await this.generateToken(user)'
+
+    return { token, user }
   }
 
   revalidateToken(): Promise<unknown> {
