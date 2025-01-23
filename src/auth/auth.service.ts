@@ -1,18 +1,18 @@
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
+import type { UsersService } from 'src/users/users.service'
 import type { SignUpInput } from './dto/inputs/signup.input'
 import type { AuthResponse } from './types/auth-response.type'
 
 @Injectable()
 export class AuthService {
-  async signUp(signUpInput: SignUpInput): Promise<AuthResponse> {
-    const logger = new Logger('Sign up')
-    logger.log('sign up input')
-    throw new Error('Method not implemented.')
+  constructor(private readonly usersService: UsersService) {}
 
-    // return {
-    //   token: '',
-    //   user: new User(),
-    // }
+  async signUp(signUpInput: SignUpInput): Promise<AuthResponse> {
+    const user = await this.usersService.create(signUpInput)
+    // TODO: crear JWT
+    const token = 'await this.generateToken(user)'
+
+    return { token, user }
   }
 
   login(): Promise<unknown> {
