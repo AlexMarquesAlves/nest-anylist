@@ -13,7 +13,7 @@ import { UpdateUserInput } from './dto/update-user.input'
 
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { SignUpInput } from '../auth/dto/inputs/signup.input'
+import { SignupInput } from '../auth/dto/inputs/signup.input'
 
 @Injectable()
 export class UsersService {
@@ -24,7 +24,7 @@ export class UsersService {
     private readonly usersRepository: Repository<User>
   ) {}
 
-  async create(signupInput: SignUpInput): Promise<User> {
+  async create(signupInput: SignupInput): Promise<User> {
     try {
       const newUser = this.usersRepository.create({
         ...signupInput,

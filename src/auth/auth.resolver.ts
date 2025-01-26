@@ -1,21 +1,23 @@
 import { UseGuards } from '@nestjs/common'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { User } from '../users/entities/user.entity'
+
 import { AuthService } from './auth.service'
-import { CurrentUser } from './decorators/current-user.decorator'
-import type { LoginInput, SignUpInput } from './dto/inputs'
 import { JwtAuthGuard } from './guards/jwt-auth.guard'
-import { AuthResponse } from './types/auth-response.type'
+
+import { User } from '../users/entities/user.entity'
+import { CurrentUser } from './decorators/current-user.decorator'
+import { LoginInput, SignupInput } from './dto/inputs'
+import { AuthResponse } from './types/auth-response.types'
 
 @Resolver()
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Mutation(() => AuthResponse, { name: 'signUp' })
-  async signUp(
-    @Args('signupInput') signupInput: SignUpInput
+  @Mutation(() => AuthResponse, { name: 'signup' })
+  async signup(
+    @Args('signupInput') signupInput: SignupInput
   ): Promise<AuthResponse> {
-    return this.authService.signUp(signupInput)
+    return this.authService.signup(signupInput)
   }
 
   @Mutation(() => AuthResponse, { name: 'login' })

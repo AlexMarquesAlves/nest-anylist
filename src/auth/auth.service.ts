@@ -9,8 +9,8 @@ import * as bcrypt from 'bcrypt'
 
 import { User } from 'src/users/entities/user.entity'
 import { UsersService } from '../users/users.service'
-import { LoginInput, type SignUpInput } from './dto/inputs'
-import { AuthResponse } from './types/auth-response.type'
+import { LoginInput, SignupInput } from './dto/inputs'
+import { AuthResponse } from './types/auth-response.types'
 
 @Injectable()
 export class AuthService {
@@ -23,7 +23,7 @@ export class AuthService {
     return this.jwtService.sign({ id: userId })
   }
 
-  async signUp(signupInput: SignUpInput): Promise<AuthResponse> {
+  async signup(signupInput: SignupInput): Promise<AuthResponse> {
     const user = await this.usersService.create(signupInput)
 
     const token = this.getJwtToken(user.id)
