@@ -1,18 +1,32 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
+
 import * as bcrypt from 'bcrypt'
-import type { UsersService } from 'src/users/users.service'
-import type { LoginInput } from './dto/inputs'
-import type { SignUpInput } from './dto/inputs/signup.input'
-import type { AuthResponse } from './types/auth-response.type'
+
+import { User } from 'src/users/entities/user.entity'
+import { UsersService } from '../users/users.service'
+import { LoginInput, type SignUpInput } from './dto/inputs'
+import { AuthResponse } from './types/auth-response.type'
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService
+  ) {}
 
-  async signUp(signUpInput: SignUpInput): Promise<AuthResponse> {
-    const user = await this.usersService.create(signUpInput)
-    // TODO: crear JWT
-    const token = 'await this.generateToken(user)'
+  private getJwtToken(userId: string) {
+    return this.jwtService.sign({ id: userId })
+  }
+
+  async signUp(signupInput: SignUpInput): Promise<AuthResponse> {
+    const user = await this.usersService.create(signupInput)
+
+    const token = this.getJwtToken(user.id)
 
     return { token, user }
   }
@@ -22,15 +36,26 @@ export class AuthService {
     const user = await this.usersService.findOneByEmail(email)
 
     if (!bcrypt.compareSync(password, user.password)) {
-      throw new BadRequestException(`Email / Password do not match`)
+      throw new BadRequestException('Email / Password do not match')
     }
 
-    const token = 'await this.generateToken(user)'
+    const token = this.getJwtToken(user.id)
 
-    return { token, user }
+    return {
+      token,
+      user,
+    }
   }
 
-  revalidateToken(): Promise<unknown> {
-    throw new Error('Method not implemented.')
+  async validateUser(id: string): Promise<User> {
+    const user = await this.usersService.findOneById(id)
+
+    if (!user.isActive) {
+      throw new UnauthorizedException(`User is inactive, talk with an admin`)
+    }
+
+    delete user.password
+
+    return user
   }
 }
