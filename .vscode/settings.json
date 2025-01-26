@@ -8,8 +8,10 @@
     "source.organizeImports.biome": "always",
     "source.removeUnusedImports.biome": "always"
   },
+  // Material-icon-theme
   "material-icon-theme.activeIconPack": "nest",
   "material-icon-theme.folders.associations": {},
+  // Symbols
   "symbols.folders.associations": {
     "data": "folder-database",
     "seed": "folder-providers",
