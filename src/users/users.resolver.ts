@@ -11,16 +11,19 @@ export class UsersResolver {
   findAll(@Args() validRoles: ValidRolesArgs): Promise<User[]> {
     return this.usersService.findAll(validRoles.roles)
   }
+
   @Query(() => User, { name: 'user' })
   findOne(@Args('id', { type: () => ID }) id: string): Promise<User> {
     // TODO:
     throw new Error('No implementado')
     // return this.usersService.findOne(id);
   }
+
   // @Mutation(() => User)
   // updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
   //   return this.usersService.update(updateUserInput.id, updateUserInput);
   // }
+
   @Mutation(() => User)
   blockUser(@Args('id', { type: () => ID }) id: string): Promise<User> {
     return this.usersService.block(id)

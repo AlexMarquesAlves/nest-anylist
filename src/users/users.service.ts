@@ -12,6 +12,7 @@ import { User } from './entities/user.entity'
 import { UpdateUserInput } from './dto/update-user.input'
 
 import { InjectRepository } from '@nestjs/typeorm'
+import type { ValidRoles } from 'src/auth/enums/valid-roles.enum'
 import { Repository } from 'typeorm'
 import { SignupInput } from '../auth/dto/inputs/signup.input'
 
@@ -37,8 +38,15 @@ export class UsersService {
     }
   }
 
-  async findAll(roles: any): Promise<User[]> {
-    return []
+  async findAll(roles: ValidRoles[]): Promise<User[]> {
+    if (roles.length === 0) return this.usersRepository.find()
+
+    // ??? tenemos roles ['admin', 'superUser']
+    return this.usersRepository
+      .createQueryBuilder()
+      .andWhere('ARRAY[roles] && ARRAY[:...roles]')
+      .setParameter('roles', roles)
+      .getMany()
   }
 
   async findOneByEmail(email: string): Promise<User> {
