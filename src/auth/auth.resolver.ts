@@ -9,7 +9,7 @@ import { CurrentUser } from './decorators/current-user.decorator'
 import { LoginInput, SignupInput } from './dto/inputs'
 import { AuthResponse } from './types/auth-response.types'
 
-@Resolver()
+@Resolver(() => AuthResponse)
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
@@ -31,8 +31,8 @@ export class AuthResolver {
   @UseGuards(JwtAuthGuard)
   revalidateToken(
     @CurrentUser()
-    // * [ValidRoles.admin]
-    user: User
+    user // * [ValidRoles.admin]
+    : User
   ): AuthResponse {
     return this.authService.revalidateToken(user)
   }
