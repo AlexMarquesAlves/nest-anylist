@@ -37,7 +37,7 @@ export class UsersService {
     }
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll(roles: any): Promise<User[]> {
     return []
   }
 
