@@ -35,7 +35,10 @@ export class User {
   isActive: boolean
 
   // TODO: relaciones
-  @ManyToOne(() => User, (user) => user.lastUpdateBy, { nullable: true }) // * TypeORM Decorators
+  @ManyToOne(() => User, (user) => user.lastUpdateBy, {
+    nullable: true,
+    lazy: true,
+  }) // * TypeORM Decorators
   @JoinColumn({ name: 'lastUpdateBy' }) // * TypeORM Decorators
   @Field(() => User, { nullable: true }) // * GraphQl Decorators
   lastUpdateBy?: User
