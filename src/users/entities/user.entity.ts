@@ -1,5 +1,11 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
 
 @Entity({ name: 'users' }) // * TypeORM Decorators
 @ObjectType() // * GraphQl Decorators
@@ -28,5 +34,9 @@ export class User {
   @Field(() => Boolean) // * GraphQl Decorators
   isActive: boolean
 
-  // TODO: relaciones y otras cosas...
+  // TODO: relaciones
+  @ManyToOne(() => User, (user) => user.lastUpdateBy, { nullable: true }) // * TypeORM Decorators
+  @JoinColumn({ name: 'lastUpdateBy' }) // * TypeORM Decorators
+  @Field(() => User, { nullable: true }) // * GraphQl Decorators
+  lastUpdateBy?: User
 }

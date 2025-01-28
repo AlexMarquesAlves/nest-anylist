@@ -8,6 +8,7 @@ type User {
   email: String!
   roles: [String!]!
   isActive: Boolean!
+  lastUpdateBy: User
 }
 
 type AuthResponse {
