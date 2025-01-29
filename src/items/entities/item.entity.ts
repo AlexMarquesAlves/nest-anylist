@@ -29,7 +29,7 @@ export class Item {
 
   // ? stores
   // ? users
-  @ManyToOne(() => User, (user) => user.items, { nullable: false }) // * TypeORM decorators
+  @ManyToOne(() => User, (user) => user.items, { nullable: false, lazy: true }) // * TypeORM decorators
   @Index('userId-index') // * TypeORM decorators
   @Field(() => User) // * GraphQL decorators
   user: User
