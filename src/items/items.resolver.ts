@@ -8,7 +8,7 @@ import { ItemsService } from './items.service'
 export class ItemsResolver {
   constructor(private readonly itemsService: ItemsService) {}
 
-  @Mutation(() => Item)
+  @Mutation(() => Item, { name: 'createItem' })
   async createItem(
     @Args('createItemInput') createItemInput: CreateItemInput
   ): Promise<Item> {
@@ -27,14 +27,14 @@ export class ItemsResolver {
     return this.itemsService.findOne(id)
   }
 
-  @Mutation(() => Item)
+  @Mutation(() => Item, { name: 'updateItem' })
   async updateItem(
     @Args('updateItemInput') updateItemInput: UpdateItemInput
   ): Promise<Item> {
     return this.itemsService.update(updateItemInput.id, updateItemInput)
   }
 
-  @Mutation(() => Item)
+  @Mutation(() => Item, { name: 'removeItem' })
   removeItem(@Args('id', { type: () => ID }) id: string): Promise<Item> {
     return this.itemsService.remove(id)
   }
