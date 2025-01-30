@@ -9,6 +9,7 @@ import { join } from 'node:path'
 import { AuthModule } from './auth/auth.module'
 import { ItemsModule } from './items/items.module'
 import { UsersModule } from './users/users.module'
+import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { UsersModule } from './users/users.module'
     ItemsModule,
     UsersModule,
     AuthModule,
+    SeedModule,
   ],
   controllers: [],
   providers: [],
