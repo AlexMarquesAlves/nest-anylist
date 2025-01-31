@@ -3,7 +3,9 @@ import { ConfigService } from '@nestjs/config'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Item } from 'src/items/entities/item.entity'
 import { User } from 'src/users/entities/user.entity'
+import { UsersService } from 'src/users/users.service'
 import type { Repository } from 'typeorm'
+import { SEED_USERS } from './data/seed-data'
 
 const logger = new Logger('SeedService')
 
@@ -18,7 +20,8 @@ export class SeedService {
     private readonly itemsRepository: Repository<Item>,
 
     @InjectRepository(User)
-    private readonly usersRepository: Repository<User>
+    private readonly usersRepository: Repository<User>,
+    private readonly usersService: UsersService
   ) {
     this.isProd = configService.get('STATE') === 'prod'
   }
@@ -30,8 +33,8 @@ export class SeedService {
     // * Limpiar la base de datos BORRANDO TODO
     await this.deleteDatabase()
 
-    // * Crear los datos de ejemplo
-    await this.createData()
+    // * Crear los datos de usuario ejemplo
+    const user = await this.loadUsers()
 
     logger.log('SeedService executed successfully')
     return true
@@ -44,8 +47,13 @@ export class SeedService {
     await this.usersRepository.createQueryBuilder().delete().where({}).execute()
   }
 
-  async createData() {
-    // * Crear usuarios
-    // * Crear Items
+  async loadUsers(): Promise<User> {
+    const users = []
+
+    for (const user of SEED_USERS) {
+      users.push(await this.usersService.create(user))
+    }
+
+    return users[0]
   }
 }
