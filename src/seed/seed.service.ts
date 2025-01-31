@@ -2,10 +2,11 @@ import { Injectable, Logger, UnauthorizedException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Item } from 'src/items/entities/item.entity'
+import { ItemsService } from 'src/items/items.service'
 import { User } from 'src/users/entities/user.entity'
 import { UsersService } from 'src/users/users.service'
 import type { Repository } from 'typeorm'
-import { SEED_USERS } from './data/seed-data'
+import { SEED_ITEMS, SEED_USERS } from './data/seed-data'
 
 const logger = new Logger('SeedService')
 
@@ -15,13 +16,14 @@ export class SeedService {
 
   constructor(
     private readonly configService: ConfigService,
+    private readonly usersService: UsersService,
+    private readonly itemsService: ItemsService,
 
     @InjectRepository(Item)
     private readonly itemsRepository: Repository<Item>,
 
     @InjectRepository(User)
-    private readonly usersRepository: Repository<User>,
-    private readonly usersService: UsersService
+    private readonly usersRepository: Repository<User>
   ) {
     this.isProd = configService.get('STATE') === 'prod'
   }
@@ -35,6 +37,9 @@ export class SeedService {
 
     // * Crear los datos de usuario ejemplo
     const user = await this.loadUsers()
+
+    // * Crear los datos de items ejemplo
+    await this.loadItems(user)
 
     logger.log('SeedService executed successfully')
     return true
@@ -55,5 +60,15 @@ export class SeedService {
     }
 
     return users[0]
+  }
+
+  async loadItems(user: User): Promise<void> {
+    const itemsPromises = []
+
+    for (const item of SEED_ITEMS) {
+      itemsPromises.push(await this.itemsService.create(item, user))
+    }
+
+    await Promise.all(itemsPromises)
   }
 }
