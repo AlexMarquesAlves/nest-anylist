@@ -27,7 +27,7 @@ Nest Anylist is a API using [Nest](https://github.com/nestjs/nest) framework Typ
 
 ## Project setup
 
-```bash
+```pwsh
 # Install dependencies
 $ npm install || $ yarn install
 
@@ -37,10 +37,20 @@ $ docker-compose up -d
 
 ## Compile and run the project
 
-```bash
+```pwsh
 # development
 $ npm run start:dev || $ yarn run start:dev
 
 # production mode
 $ npm run start:prod || $ yarn run start:prod
 ```
+
+## After run the project
+
+- Open browser with link
+
+```pwsh
+localhost:3000/graphql
+```
+
+- Run the **"mutation"** `executeSeed` to fill the database with information

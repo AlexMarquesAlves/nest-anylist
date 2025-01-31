@@ -11,6 +11,7 @@ onesie
 originalname
 powerwall
 Powerwall
+pwsh
 spacefaring
 tabless
 teslo
