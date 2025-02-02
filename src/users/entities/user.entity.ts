@@ -46,6 +46,6 @@ export class User {
   lastUpdateBy?: User
 
   @OneToMany(() => Item, (item) => item.user, { lazy: true }) // * TypeORM decorators
-  @Field(() => [Item]) // * GraphQL decorators
+  // @Field(() => [Item]) // * GraphQL decorators
   items: Item[]
 }

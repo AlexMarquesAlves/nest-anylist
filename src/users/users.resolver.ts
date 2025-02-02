@@ -9,6 +9,8 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql'
+import { PaginationArgs, SearchArgs } from 'src/common/dto/args'
+import { Item } from 'src/items/entities/item.entity'
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { ValidRoles } from '../auth/enums/valid-roles.enum'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
@@ -31,8 +33,6 @@ export class UsersResolver {
     @Args() validRoles: ValidRolesArgs,
     @CurrentUser([ValidRoles.admin, ValidRoles.superUser]) user: User
   ): Promise<User[]> {
-    const users = await this.usersService.findAll(validRoles.roles)
-    console.log(users)
     return this.usersService.findAll(validRoles.roles)
   }
 
@@ -66,5 +66,15 @@ export class UsersResolver {
     @Parent() user: User
   ): Promise<number> {
     return this.itemsService.itemCountByUser(user)
+  }
+
+  @ResolveField(() => [Item], { name: 'items' })
+  async getItemsByUser(
+    @CurrentUser([ValidRoles.admin]) _adminUser: User,
+    @Parent() user: User,
+    @Args() paginationArgs: PaginationArgs,
+    @Args() searchArgs: SearchArgs
+  ): Promise<Item[]> {
+    return this.itemsService.findAll(user, paginationArgs, searchArgs)
   }
 }
