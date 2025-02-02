@@ -5,16 +5,14 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common'
-import * as bcrypt from 'bcrypt'
-
-import { User } from './entities/user.entity'
-
-import { UpdateUserInput } from './dto/update-user.input'
-
 import { InjectRepository } from '@nestjs/typeorm'
-import type { ValidRoles } from 'src/auth/enums/valid-roles.enum'
+import * as bcrypt from 'bcrypt'
 import { Repository } from 'typeorm'
 import { SignupInput } from '../auth/dto/inputs/signup.input'
+import { ValidRoles } from '../auth/enums/valid-roles.enum'
+import { PaginationArgs } from '../common/dto/args'
+import { UpdateUserInput } from './dto/update-user.input'
+import { User } from './entities/user.entity'
 
 @Injectable()
 export class UsersService {
@@ -38,18 +36,36 @@ export class UsersService {
     }
   }
 
-  async findAll(roles: ValidRoles[]): Promise<User[]> {
-    if (roles.length === 0)
-      return this.usersRepository.find({
-        // relations: { lastUpdateBy: true }, //! Ya no es necesario por tener la propriedad lazy en lastUpdateBy
-      })
+  async findAll(
+    roles: ValidRoles[],
+    paginationArgs: PaginationArgs
+  ): Promise<User[]> {
+    const { offset, limit } = paginationArgs
+
+    if (roles.length === 0) {
+      const queryBuilder = this.usersRepository
+        .createQueryBuilder()
+        .take(limit)
+        .skip(offset)
+
+      return queryBuilder.getMany()
+
+      // return this.usersRepository.find({
+      //   // relations: { lastUpdateBy: true }, //! Ya no es necesario por tener la propriedad lazy en lastUpdateBy
+      // })
+    }
 
     // ??? tenemos roles ['admin', 'superUser']
-    return this.usersRepository
+    const queryBuilder = this.usersRepository
       .createQueryBuilder()
+      .take(limit)
+      .skip(offset)
       .andWhere('ARRAY[roles] && ARRAY[:...roles]')
       .setParameter('roles', roles)
-      .getMany()
+
+    this.logger.log(`Searching for all users`)
+
+    return queryBuilder.getMany()
   }
 
   async findOneByEmail(email: string): Promise<User> {

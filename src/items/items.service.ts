@@ -1,8 +1,8 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { PaginationArgs, SearchArgs } from 'src/common/dto/args'
-import { User } from 'src/users/entities/user.entity'
 import { Repository } from 'typeorm'
+import { User } from '../users/entities/user.entity'
 import { CreateItemInput, UpdateItemInput } from './dto/inputs'
 import { Item } from './entities/item.entity'
 
@@ -34,7 +34,7 @@ export class ItemsService {
       .createQueryBuilder() //* Query most simple
       .take(limit)
       .skip(offset)
-      .where(`"userID" = :userId`, { userId: user.id })
+      .where(`"userId" = :userId`, { userId: user.id })
 
     if (search) {
       queryBuilder.andWhere(`LOWER(name) like :name`, { search: `%${search}%` })

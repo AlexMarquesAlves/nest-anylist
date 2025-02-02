@@ -9,11 +9,11 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql'
-import { PaginationArgs, SearchArgs } from 'src/common/dto/args'
-import { Item } from 'src/items/entities/item.entity'
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { ValidRoles } from '../auth/enums/valid-roles.enum'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
+import { PaginationArgs, SearchArgs } from '../common/dto/args'
+import { Item } from '../items/entities/item.entity'
 import { ItemsService } from '../items/items.service'
 import { ValidRolesArgs } from './dto/args/roles.arg'
 import { UpdateUserInput } from './dto/update-user.input'
@@ -31,9 +31,11 @@ export class UsersResolver {
   @Query(() => [User], { name: 'users' })
   async findAll(
     @Args() validRoles: ValidRolesArgs,
-    @CurrentUser([ValidRoles.admin, ValidRoles.superUser]) user: User
+    @CurrentUser([ValidRoles.admin, ValidRoles.superUser]) _user: User,
+    @Args() paginationArgs: PaginationArgs,
+    @Args() searchArgs: SearchArgs
   ): Promise<User[]> {
-    return this.usersService.findAll(validRoles.roles)
+    return this.usersService.findAll(validRoles.roles, paginationArgs)
   }
 
   @Query(() => User, { name: 'user' })
