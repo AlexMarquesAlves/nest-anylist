@@ -35,11 +35,15 @@ export class UsersResolver {
     @Args() paginationArgs: PaginationArgs,
     @Args() searchArgs: SearchArgs
   ): Promise<User[]> {
-    return this.usersService.findAll(validRoles.roles, paginationArgs)
+    return this.usersService.findAll(
+      validRoles.roles,
+      paginationArgs,
+      searchArgs
+    )
   }
 
   @Query(() => User, { name: 'user' })
-  findOne(
+  async findOne(
     @Args('id', { type: () => ID }, ParseUUIDPipe) id: string,
     @CurrentUser([ValidRoles.admin, ValidRoles.superUser]) user: User
   ): Promise<User> {
@@ -55,7 +59,7 @@ export class UsersResolver {
   }
 
   @Mutation(() => User, { name: 'blockUser' })
-  blockUser(
+  async blockUser(
     @Args('id', { type: () => ID }, ParseUUIDPipe) id: string,
     @CurrentUser([ValidRoles.admin]) user: User
   ): Promise<User> {

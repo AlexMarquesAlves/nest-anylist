@@ -10,7 +10,7 @@ import * as bcrypt from 'bcrypt'
 import { Repository } from 'typeorm'
 import { SignupInput } from '../auth/dto/inputs/signup.input'
 import { ValidRoles } from '../auth/enums/valid-roles.enum'
-import { PaginationArgs } from '../common/dto/args'
+import { PaginationArgs, SearchArgs } from '../common/dto/args'
 import { UpdateUserInput } from './dto/update-user.input'
 import { User } from './entities/user.entity'
 
@@ -38,9 +38,11 @@ export class UsersService {
 
   async findAll(
     roles: ValidRoles[],
-    paginationArgs: PaginationArgs
+    paginationArgs: PaginationArgs,
+    searchArgs: SearchArgs
   ): Promise<User[]> {
     const { offset, limit } = paginationArgs
+    const { search } = searchArgs
 
     if (roles.length === 0) {
       const queryBuilder = this.usersRepository
@@ -48,11 +50,16 @@ export class UsersService {
         .take(limit)
         .skip(offset)
 
-      return queryBuilder.getMany()
+      if (search) {
+        queryBuilder.andWhere('LOWER("fullName") like :fullName', {
+          fullName: `%${search.toLowerCase()}%`,
+        })
+        this.logger.log(`Searching for all users that includes ${search}`)
+      } else {
+        this.logger.log(`Searching for all users`)
+      }
 
-      // return this.usersRepository.find({
-      //   // relations: { lastUpdateBy: true }, //! Ya no es necesario por tener la propriedad lazy en lastUpdateBy
-      // })
+      return queryBuilder.getMany()
     }
 
     // ??? tenemos roles ['admin', 'superUser']
@@ -62,8 +69,6 @@ export class UsersService {
       .skip(offset)
       .andWhere('ARRAY[roles] && ARRAY[:...roles]')
       .setParameter('roles', roles)
-
-    this.logger.log(`Searching for all users`)
 
     return queryBuilder.getMany()
   }
