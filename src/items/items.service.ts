@@ -6,10 +6,10 @@ import { User } from '../users/entities/user.entity'
 import { CreateItemInput, UpdateItemInput } from './dto/inputs'
 import { Item } from './entities/item.entity'
 
-const logger = new Logger('ItemsService')
-
 @Injectable()
 export class ItemsService {
+  private logger = new Logger('ItemsService')
+
   constructor(
     @InjectRepository(Item)
     private readonly itemsRepository: Repository<Item>
@@ -18,7 +18,7 @@ export class ItemsService {
   async create(createItemInput: CreateItemInput, user: User): Promise<Item> {
     const newItem = this.itemsRepository.create({ ...createItemInput, user })
 
-    logger.log(` New item "${newItem.name}" was successfully created`)
+    this.logger.log(` New item "${newItem.name}" was successfully created`)
     return await this.itemsRepository.save(newItem)
   }
 
@@ -27,29 +27,34 @@ export class ItemsService {
     paginationArgs: PaginationArgs,
     searchArgs: SearchArgs
   ): Promise<Item[]> {
-    const { offset, limit } = paginationArgs
+    const { limit, offset } = paginationArgs
     const { search } = searchArgs
 
     const queryBuilder = this.itemsRepository
-      .createQueryBuilder() //* Query most simple
+      .createQueryBuilder()
       .take(limit)
       .skip(offset)
       .where(`"userId" = :userId`, { userId: user.id })
-
     if (search) {
-      queryBuilder.andWhere(`LOWER(name) like :name`, { search: `%${search}%` })
+      queryBuilder.andWhere('LOWER(name) like :name', {
+        name: `%${search.toLowerCase()}%`,
+      })
+      this.logger.log(`Searching for all items that includes ${search}`)
+    } else {
+      this.logger.log(`Searching for all items`)
     }
-    logger.log(`Searching for all items`)
 
-    // return await this.itemsRepository.find({ //! Work but is large...
+    return queryBuilder.getMany()
+    // return this.itemsRepository.find({ //! Work but is large...
     //   take: limit,
     //   skip: offset,
     //   where: {
-    //     user: { id: user.id },
-    //     name: Like(`%${search.toLowerCase()}%`),
-    //   },
-    // })
-    return queryBuilder.getMany()
+    //     user: {
+    //       id: user.id
+    //     },
+    //     name: Like(`%${ search.toLowerCase() }%`)
+    //   }
+    // });
   }
 
   async findOne(id: string, user: User): Promise<Item> {
@@ -62,7 +67,7 @@ export class ItemsService {
     }
 
     // item.user = user
-    logger.log(`Item with ID: ${id} was successfully found`)
+    this.logger.log(`Item with ID: ${id} was successfully found`)
     return item
   }
 
@@ -78,7 +83,7 @@ export class ItemsService {
       throw new NotFoundException(`Item with id: ${id} not found`)
     }
 
-    logger.log(`Item with ID: ${id} was successfully updated`)
+    this.logger.log(`Item with ID: ${id} was successfully updated`)
     return await this.itemsRepository.save(item)
   }
 
@@ -88,7 +93,7 @@ export class ItemsService {
     const item = await this.findOne(id, user)
 
     await this.itemsRepository.remove(item)
-    logger.log(`Item with ID: ${id} was successfully removed`)
+    this.logger.log(`Item with ID: ${id} was successfully removed`)
 
     return { ...item, id }
   }
