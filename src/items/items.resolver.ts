@@ -26,7 +26,7 @@ export class ItemsResolver {
     @CurrentUser() user: User,
     @Args() paginationArgs: PaginationArg
   ): Promise<Item[]> {
-    return this.itemsService.findAll(user)
+    return this.itemsService.findAll(user, paginationArgs)
   }
 
   @Query(() => Item, { name: 'item' })
