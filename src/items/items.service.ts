@@ -2,7 +2,7 @@ import { Injectable, Logger, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { PaginationArgs, SearchArgs } from 'src/common/dto/args'
 import { User } from 'src/users/entities/user.entity'
-import { Like, Repository } from 'typeorm'
+import { Repository } from 'typeorm'
 import { CreateItemInput, UpdateItemInput } from './dto/inputs'
 import { Item } from './entities/item.entity'
 
@@ -30,16 +30,26 @@ export class ItemsService {
     const { offset, limit } = paginationArgs
     const { search } = searchArgs
 
-    // TODO: filtrar
+    const queryBuilder = this.itemsRepository
+      .createQueryBuilder() //* Query most simple
+      .take(limit)
+      .skip(offset)
+      .where(`"userID" = :userId`, { userId: user.id })
+
+    if (search) {
+      queryBuilder.andWhere(`LOWER(name) like :name`, { search: `%${search}%` })
+    }
     logger.log(`Searching for all items`)
-    return await this.itemsRepository.find({
-      take: limit,
-      skip: offset,
-      where: {
-        user: { id: user.id },
-        name: Like(`%${search}%`),
-      },
-    })
+
+    // return await this.itemsRepository.find({ //! Work but is large...
+    //   take: limit,
+    //   skip: offset,
+    //   where: {
+    //     user: { id: user.id },
+    //     name: Like(`%${search.toLowerCase()}%`),
+    //   },
+    // })
+    return queryBuilder.getMany()
   }
 
   async findOne(id: string, user: User): Promise<Item> {
