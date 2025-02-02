@@ -45,13 +45,13 @@ export class UsersService {
     const { search } = searchArgs
 
     if (roles.length === 0) {
-      const queryBuilder = this.usersRepository
+      const queryBuilderWithZeroRoles = this.usersRepository
         .createQueryBuilder()
         .take(limit)
         .skip(offset)
 
       if (search) {
-        queryBuilder.andWhere('LOWER("fullName") like :fullName', {
+        queryBuilderWithZeroRoles.andWhere('LOWER("fullName") like :fullName', {
           fullName: `%${search.toLowerCase()}%`,
         })
         this.logger.log(`Searching for all users that includes ${search}`)
@@ -59,18 +59,26 @@ export class UsersService {
         this.logger.log(`Searching for all users`)
       }
 
-      return queryBuilder.getMany()
+      return queryBuilderWithZeroRoles.getMany()
     }
 
     // ??? tenemos roles ['admin', 'superUser']
-    const queryBuilder = this.usersRepository
+    const queryBuilderWithRoles = this.usersRepository
       .createQueryBuilder()
       .take(limit)
       .skip(offset)
       .andWhere('ARRAY[roles] && ARRAY[:...roles]')
       .setParameter('roles', roles)
 
-    return queryBuilder.getMany()
+    if (search) {
+      queryBuilderWithRoles.andWhere('LOWER("fullName") like :fullName', {
+        fullName: `%${search.toLowerCase()}%`,
+      })
+      this.logger.log(`Searching for all users that includes ${search}`)
+    } else {
+      this.logger.log(`Searching for all users`)
+    }
+    return queryBuilderWithRoles.getMany()
   }
 
   async findOneByEmail(email: string): Promise<User> {
