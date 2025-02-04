@@ -73,7 +73,13 @@ export class ListsService {
     return await this.listsRepository.save(list)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} list`
+  async remove(id: string, user: User): Promise<List> {
+    // TODO: soft delete, integridad referencial
+    const list = await this.findOne(id, user)
+
+    await this.listsRepository.remove(list)
+    this.logger.log(`Item with ID: ${id} was successfully removed`)
+
+    return { ...list, id }
   }
 }

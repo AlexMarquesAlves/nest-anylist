@@ -85,7 +85,6 @@ export class ItemsService {
 
   async remove(id: string, user: User): Promise<Item> {
     // TODO: soft delete, integridad referencial
-
     const item = await this.findOne(id, user)
 
     await this.itemsRepository.remove(item)
