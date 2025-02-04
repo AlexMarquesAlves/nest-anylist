@@ -1,13 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { Item } from 'src/items/entities/item.entity'
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm'
+import { List } from 'src/lists/entities/list.entity'
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity({ name: 'users' }) // * TypeORM Decorators
 @ObjectType() // * GraphQl Decorators
@@ -36,16 +30,32 @@ export class User {
   @Field(() => Boolean) // * GraphQl Decorators
   isActive: boolean
 
-  // TODO: relaciones
-  @ManyToOne(() => User, (user) => user.lastUpdateBy, {
-    nullable: true,
-    lazy: true,
-  }) // * TypeORM Decorators
+  /* Relaciones */
+  @ManyToOne(
+    () => User,
+    (user) => user.lastUpdateBy,
+    {
+      nullable: true,
+      lazy: true,
+    }
+  ) // * TypeORM Decorators
   @JoinColumn({ name: 'lastUpdateBy' }) // * TypeORM Decorators
   @Field(() => User, { nullable: true }) // * GraphQl Decorators
   lastUpdateBy?: User
 
-  @OneToMany(() => Item, (item) => item.user, { lazy: true }) // * TypeORM decorators
-  @Field(() => [Item]) // * GraphQL decorators
+  @OneToMany(
+    () => Item,
+    (item) => item.user,
+    { lazy: true }
+  ) // * TypeORM decorators
+  // @Field(() => [Item]) // * GraphQL decorators
   items: Item[]
+
+  @OneToMany(
+    () => List,
+    (list) => list.user
+    // ? { lazy: true }
+  ) // * TypeORM decorators
+  // @Field(() => [Item]) // * GraphQL decorators
+  lists: List[]
 }

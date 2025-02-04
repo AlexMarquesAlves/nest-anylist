@@ -12,6 +12,8 @@ import {
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { ValidRoles } from '../auth/enums/valid-roles.enum'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
+import { PaginationArgs, SearchArgs } from '../common/dto/args'
+import { Item } from '../items/entities/item.entity'
 import { ItemsService } from '../items/items.service'
 import { ValidRolesArgs } from './dto/args/roles.arg'
 import { UpdateUserInput } from './dto/update-user.input'
@@ -29,15 +31,19 @@ export class UsersResolver {
   @Query(() => [User], { name: 'users' })
   async findAll(
     @Args() validRoles: ValidRolesArgs,
-    @CurrentUser([ValidRoles.admin, ValidRoles.superUser]) user: User
+    @CurrentUser([ValidRoles.admin, ValidRoles.superUser]) _user: User,
+    @Args() paginationArgs: PaginationArgs,
+    @Args() searchArgs: SearchArgs
   ): Promise<User[]> {
-    const users = await this.usersService.findAll(validRoles.roles)
-    console.log(users)
-    return this.usersService.findAll(validRoles.roles)
+    return this.usersService.findAll(
+      validRoles.roles,
+      paginationArgs,
+      searchArgs
+    )
   }
 
   @Query(() => User, { name: 'user' })
-  findOne(
+  async findOne(
     @Args('id', { type: () => ID }, ParseUUIDPipe) id: string,
     @CurrentUser([ValidRoles.admin, ValidRoles.superUser]) user: User
   ): Promise<User> {
@@ -53,7 +59,7 @@ export class UsersResolver {
   }
 
   @Mutation(() => User, { name: 'blockUser' })
-  blockUser(
+  async blockUser(
     @Args('id', { type: () => ID }, ParseUUIDPipe) id: string,
     @CurrentUser([ValidRoles.admin]) user: User
   ): Promise<User> {
@@ -66,5 +72,15 @@ export class UsersResolver {
     @Parent() user: User
   ): Promise<number> {
     return this.itemsService.itemCountByUser(user)
+  }
+
+  @ResolveField(() => [Item], { name: 'items' })
+  async getItemsByUser(
+    @CurrentUser([ValidRoles.admin]) _adminUser: User,
+    @Parent() user: User,
+    @Args() paginationArgs: PaginationArgs,
+    @Args() searchArgs: SearchArgs
+  ): Promise<Item[]> {
+    return this.itemsService.findAll(user, paginationArgs, searchArgs)
   }
 }
