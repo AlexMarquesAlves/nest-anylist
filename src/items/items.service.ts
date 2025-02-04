@@ -18,7 +18,7 @@ export class ItemsService {
   async create(createItemInput: CreateItemInput, user: User): Promise<Item> {
     const newItem = this.itemsRepository.create({ ...createItemInput, user })
 
-    this.logger.log(` New item "${newItem.name}" was successfully created`)
+    this.logger.log(`New item "${newItem.name}" was successfully created`)
     return await this.itemsRepository.save(newItem)
   }
 
@@ -71,11 +71,7 @@ export class ItemsService {
     return item
   }
 
-  async update(
-    id: string,
-    updateItemInput: UpdateItemInput,
-    user: User
-  ): Promise<Item> {
+  async update(id: string, updateItemInput: UpdateItemInput, user: User): Promise<Item> {
     await this.findOne(id, user)
     const item = await this.itemsRepository.preload(updateItemInput)
 
