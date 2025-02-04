@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable, Logger, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { PaginationArgs, SearchArgs } from 'src/common/dto/args'
 import { User } from 'src/users/entities/user.entity'
@@ -48,8 +48,17 @@ export class ListsService {
     return queryBuilder.getMany()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} list`
+  async findOne(id: string, user: User): Promise<List> {
+    const list = await this.listsRepository.findOneBy({
+      id,
+      user: { id: user.id },
+    })
+    if (!list) {
+      throw new NotFoundException(`List with id: ${id} not found`)
+    }
+
+    this.logger.log(`Item with ID: ${id} was successfully found`)
+    return list
   }
 
   update(id: number, updateListInput: UpdateListInput) {
