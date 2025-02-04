@@ -1,7 +1,10 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql'
+import { IsNotEmpty, IsString } from 'class-validator'
 
 @InputType()
 export class CreateListInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field(() => String, { description: 'Name of list' }) //* GraphQl decorators
+  @IsString() //* class-validator decorators
+  @IsNotEmpty()
+  name: string
 }

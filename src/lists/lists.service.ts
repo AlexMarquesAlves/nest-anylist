@@ -57,12 +57,20 @@ export class ListsService {
       throw new NotFoundException(`List with id: ${id} not found`)
     }
 
-    this.logger.log(`Item with ID: ${id} was successfully found`)
+    this.logger.log(`List with ID: ${id} was successfully found`)
     return list
   }
 
-  update(id: number, updateListInput: UpdateListInput) {
-    return `This action updates a #${id} list`
+  async update(id: string, updateListInput: UpdateListInput, user: User): Promise<List> {
+    await this.findOne(id, user)
+    const list = await this.listsRepository.preload({ ...updateListInput, user })
+
+    if (!list) {
+      throw new NotFoundException(`List with id: ${id} not found`)
+    }
+
+    this.logger.log(`List with ID: ${id} was successfully updated`)
+    return await this.listsRepository.save(list)
   }
 
   remove(id: number) {
