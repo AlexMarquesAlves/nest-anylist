@@ -82,4 +82,10 @@ export class ListsService {
 
     return { ...list, id }
   }
+
+  async listCountByUser(user: User): Promise<number> {
+    return this.listsRepository.count({
+      where: { user: { id: user.id } },
+    })
+  }
 }
