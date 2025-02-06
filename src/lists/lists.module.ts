@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
-import { ListsService } from './lists.service';
-import { ListsResolver } from './lists.resolver';
+import { Module } from '@nestjs/common'
+import { ListsResolver } from './lists.resolver'
+import { ListsService } from './lists.service'
 
 @Module({
   providers: [ListsResolver, ListsService],

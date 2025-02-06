@@ -1,12 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { User } from 'src/users/entities/user.entity'
-import {
-  Column,
-  Entity,
-  Index,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm'
+import { Column, Entity, Index, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity({ name: 'items' })
 @ObjectType()
@@ -29,7 +23,11 @@ export class Item {
 
   // ? stores
   // ? users
-  @ManyToOne(() => User, (user) => user.items, { nullable: false, lazy: true }) // * TypeORM decorators
+  @ManyToOne(
+    () => User,
+    (user) => user.items,
+    { nullable: false, lazy: true }
+  ) // * TypeORM decorators
   @Index('userId-index') // * TypeORM decorators
   @Field(() => User) // * GraphQL decorators
   user: User

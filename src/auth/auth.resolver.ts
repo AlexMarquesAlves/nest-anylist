@@ -14,16 +14,12 @@ export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
   @Mutation(() => AuthResponse, { name: 'signup' })
-  async signup(
-    @Args('signupInput') signupInput: SignupInput
-  ): Promise<AuthResponse> {
+  async signup(@Args('signupInput') signupInput: SignupInput): Promise<AuthResponse> {
     return this.authService.signup(signupInput)
   }
 
   @Mutation(() => AuthResponse, { name: 'login' })
-  async login(
-    @Args('loginInput') loginInput: LoginInput
-  ): Promise<AuthResponse> {
+  async login(@Args('loginInput') loginInput: LoginInput): Promise<AuthResponse> {
     return this.authService.login(loginInput)
   }
 

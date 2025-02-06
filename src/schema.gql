@@ -51,7 +51,9 @@ type Mutation {
   updateItem(updateItemInput: UpdateItemInput!): Item!
   removeItem(id: ID!): Item!
 
-  """Seed the database with some data"""
+  """
+  Seed the database with some data
+  """
   Seed: Boolean!
 }
 

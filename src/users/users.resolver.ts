@@ -1,14 +1,5 @@
 import { ParseUUIDPipe, UseGuards } from '@nestjs/common'
-import {
-  Args,
-  ID,
-  Int,
-  Mutation,
-  Parent,
-  Query,
-  ResolveField,
-  Resolver,
-} from '@nestjs/graphql'
+import { Args, ID, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { ValidRoles } from '../auth/enums/valid-roles.enum'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
@@ -35,11 +26,7 @@ export class UsersResolver {
     @Args() paginationArgs: PaginationArgs,
     @Args() searchArgs: SearchArgs
   ): Promise<User[]> {
-    return this.usersService.findAll(
-      validRoles.roles,
-      paginationArgs,
-      searchArgs
-    )
+    return this.usersService.findAll(validRoles.roles, paginationArgs, searchArgs)
   }
 
   @Query(() => User, { name: 'user' })
