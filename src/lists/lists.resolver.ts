@@ -23,7 +23,7 @@ export class ListsResolver {
   }
 
   @Query(() => [List], { name: 'lists' })
-  findAll(
+  async findAll(
     @CurrentUser() user: User,
     @Args() paginationArgs: PaginationArgs,
     @Args() searchArgs: SearchArgs
@@ -32,16 +32,19 @@ export class ListsResolver {
   }
 
   @Query(() => List, { name: 'list' })
-  findOne(
+  async findOne(
     @Args('id', { type: () => ID }, ParseUUIDPipe) id: string,
     @CurrentUser() user: User
   ): Promise<List> {
     return this.listsService.findOne(id, user)
   }
 
-  @Mutation(() => List)
-  updateList(@Args('updateListInput') updateListInput: UpdateListInput) {
-    return this.listsService.update(updateListInput.id, updateListInput)
+  @Mutation(() => List, { name: 'updateList' })
+  async updateList(
+    @Args('updateListInput') updateListInput: UpdateListInput,
+    @CurrentUser() user: User
+  ): Promise<List> {
+    return this.listsService.update(updateListInput.id, updateListInput, user)
   }
 
   @Mutation(() => List)
