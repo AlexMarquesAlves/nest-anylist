@@ -12,6 +12,7 @@ type Item {
 type List {
   id: ID!
   name: String!
+  user: User!
 }
 
 type User {

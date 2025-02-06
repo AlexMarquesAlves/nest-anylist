@@ -20,5 +20,6 @@ export class List {
     { nullable: false, lazy: true }
   ) // * TypeORM decorators
   @Index('userId-list-index')
+  @Field(() => User)
   user: User
 }
