@@ -47,7 +47,7 @@ export class ListsResolver {
     return this.listsService.update(updateListInput.id, updateListInput, user)
   }
 
-  @Mutation(() => List)
+  @Mutation(() => List, { name: 'removeList' })
   async removeList(
     @Args('id', { type: () => ID }, ParseUUIDPipe) id: string,
     @CurrentUser() user: User
