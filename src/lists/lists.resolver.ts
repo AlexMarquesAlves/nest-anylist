@@ -1,6 +1,6 @@
-import { UseGuards } from '@nestjs/common'
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
-import type { PaginationArgs, SearchArgs } from 'src/common/dto/args'
+import { ParseUUIDPipe, UseGuards } from '@nestjs/common'
+import { Args, ID, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { PaginationArgs, SearchArgs } from 'src/common/dto/args'
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
 import { User } from '../users/entities/user.entity'
@@ -32,8 +32,11 @@ export class ListsResolver {
   }
 
   @Query(() => List, { name: 'list' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.listsService.findOne(id)
+  findOne(
+    @Args('id', { type: () => ID }, ParseUUIDPipe) id: string,
+    @CurrentUser() user: User
+  ): Promise<List> {
+    return this.listsService.findOne(id, user)
   }
 
   @Mutation(() => List)
