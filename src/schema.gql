@@ -34,8 +34,9 @@ type AuthResponse {
 }
 
 type ListItem {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  id: ID!
+  quantity: Float!
+  completed: Boolean!
 }
 
 type Query {
