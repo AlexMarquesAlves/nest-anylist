@@ -23,6 +23,7 @@ type User {
   lastUpdateBy: User
   itemCount: Int!
   items(offset: Int = 0, limit: Int = 10, search: String): [Item!]!
+  lists(offset: Int = 0, limit: Int = 10, search: String): [List!]!
 }
 
 type AuthResponse {
@@ -57,12 +58,12 @@ type Mutation {
   createItem(createItemInput: CreateItemInput!): Item!
   updateItem(updateItemInput: UpdateItemInput!): Item!
   removeItem(id: ID!): Item!
-
-  """Seed the database with some data"""
-  Seed: Boolean!
   createList(createListInput: CreateListInput!): List!
   updateList(updateListInput: UpdateListInput!): List!
   removeList(id: ID!): List!
+
+  """Seed the database with some data"""
+  Seed: Boolean!
 }
 
 input SignupInput {

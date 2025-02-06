@@ -1,11 +1,13 @@
 import { ParseUUIDPipe, UseGuards } from '@nestjs/common'
 import { Args, ID, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
+import { List } from 'src/lists/entities/list.entity'
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { ValidRoles } from '../auth/enums/valid-roles.enum'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
 import { PaginationArgs, SearchArgs } from '../common/dto/args'
 import { Item } from '../items/entities/item.entity'
 import { ItemsService } from '../items/items.service'
+import { ListsService } from '../lists/lists.service'
 import { ValidRolesArgs } from './dto/args/roles.arg'
 import { UpdateUserInput } from './dto/update-user.input'
 import { User } from './entities/user.entity'
@@ -16,7 +18,8 @@ import { UsersService } from './users.service'
 export class UsersResolver {
   constructor(
     private readonly usersService: UsersService,
-    private readonly itemsService: ItemsService
+    private readonly itemsService: ItemsService,
+    private readonly listsService: ListsService
   ) {}
 
   @Query(() => [User], { name: 'users' })
@@ -69,5 +72,15 @@ export class UsersResolver {
     @Args() searchArgs: SearchArgs
   ): Promise<Item[]> {
     return this.itemsService.findAll(user, paginationArgs, searchArgs)
+  }
+
+  @ResolveField(() => [List], { name: 'lists' })
+  async getListsByUser(
+    @CurrentUser([ValidRoles.admin]) _adminUser: User,
+    @Parent() user: User,
+    @Args() paginationArgs: PaginationArgs,
+    @Args() searchArgs: SearchArgs
+  ): Promise<List[]> {
+    return this.listsService.findAll(user, paginationArgs, searchArgs)
   }
 }
