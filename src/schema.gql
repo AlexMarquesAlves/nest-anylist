@@ -9,10 +9,17 @@ type Item {
   user: User!
 }
 
+type ListItem {
+  id: ID!
+  quantity: Float!
+  completed: Boolean!
+}
+
 type List {
   id: ID!
   name: String!
   user: User!
+  listItem: [ListItem!]!
 }
 
 type User {
@@ -31,12 +38,6 @@ type User {
 type AuthResponse {
   token: String!
   user: User!
-}
-
-type ListItem {
-  id: ID!
-  quantity: Float!
-  completed: Boolean!
 }
 
 type Query {
