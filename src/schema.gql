@@ -50,7 +50,6 @@ type Query {
   item(id: ID!): Item!
   lists(offset: Int = 0, limit: Int = 10, search: String): [List!]!
   list(id: ID!): List!
-  listItem(id: Int!): ListItem!
 }
 
 """
@@ -77,8 +76,6 @@ type Mutation {
   """Seed the database with some data"""
   Seed: Boolean!
   createListItem(createListItemInput: CreateListItemInput!): ListItem!
-  updateListItem(updateListItemInput: UpdateListItemInput!): ListItem!
-  removeListItem(id: Int!): ListItem!
 }
 
 input SignupInput {
@@ -128,12 +125,4 @@ input CreateListItemInput {
   completed: Boolean = false
   listId: ID!
   itemId: ID!
-}
-
-input UpdateListItemInput {
-  quantity: Float = 0
-  completed: Boolean = false
-  listId: ID
-  itemId: ID
-  id: Int!
 }
