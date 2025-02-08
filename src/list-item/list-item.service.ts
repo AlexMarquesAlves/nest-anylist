@@ -50,6 +50,10 @@ export class ListItemService {
     return queryBuilder.getMany()
   }
 
+  async countListItemByList(list: List): Promise<number> {
+    return this.listItemRepository.count({ where: { id: list.id } })
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} listItem`
   }

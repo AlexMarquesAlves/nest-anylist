@@ -8,6 +8,7 @@ type List {
   user: User!
   listItem: [ListItem!]!
   items(offset: Int = 0, limit: Int = 10, search: String): [ListItem!]!
+  totalItems: Float!
 }
 
 type ListItem {
