@@ -7,6 +7,6 @@ import { ListItemService } from './list-item.service'
 @Module({
   providers: [ListItemResolver, ListItemService],
   imports: [TypeOrmModule.forFeature([ListItem])],
-  exports: [ListItemResolver, TypeOrmModule],
+  exports: [ListItemService, TypeOrmModule],
 })
 export class ListItemModule {}
