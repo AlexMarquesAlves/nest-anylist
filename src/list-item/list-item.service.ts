@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { PaginationArgs, SearchArgs } from 'src/common/dto/args'
 import { Repository } from 'typeorm'
+import { PaginationArgs, SearchArgs } from '../common/dto/args'
 import { List } from '../lists/entities/list.entity'
 import { CreateListItemInput } from './dto/create-list-item.input'
 import { UpdateListItemInput } from './dto/update-list-item.input'
@@ -54,8 +54,15 @@ export class ListItemService {
     return this.listItemRepository.count({ where: { id: list.id } })
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} listItem`
+  async findOne(id: string): Promise<ListItem> {
+    const listItem = await this.listItemRepository.findOneBy({ id })
+
+    if (!listItem) {
+      this.logger.error(`ListItem with id ${id} not found`)
+    }
+
+    this.logger.log(`Looking for list item with id: ${id}`)
+    return listItem
   }
 
   update(id: number, updateListItemInput: UpdateListItemInput) {
