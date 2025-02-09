@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable, Logger, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { PaginationArgs, SearchArgs } from '../common/dto/args'
@@ -65,8 +65,19 @@ export class ListItemService {
     return listItem
   }
 
-  update(id: number, updateListItemInput: UpdateListItemInput) {
-    return `This action updates a #${id} listItem`
+  async update(id: string, updateListItemInput: UpdateListItemInput): Promise<ListItem> {
+    const { itemId, listId, ...rest } = updateListItemInput
+    const listItem = await this.listItemRepository.preload({
+      ...rest,
+      item: { id: itemId },
+      list: { id: listId },
+    })
+    if (!listItem) {
+      this.logger.error(`ListItem with id ${id} not found`)
+      throw new NotFoundException(`ListItem with id ${id} not found`)
+    }
+
+    return this.listItemRepository.save(listItem)
   }
 
   remove(id: number) {
