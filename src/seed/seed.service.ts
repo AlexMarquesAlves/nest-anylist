@@ -1,11 +1,13 @@
 import { Injectable, Logger, UnauthorizedException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Item } from 'src/items/entities/item.entity'
-import { ItemsService } from 'src/items/items.service'
-import { User } from 'src/users/entities/user.entity'
-import { UsersService } from 'src/users/users.service'
-import type { Repository } from 'typeorm'
+import { Repository } from 'typeorm'
+import { Item } from '../items/entities/item.entity'
+import { ItemsService } from '../items/items.service'
+import { ListItem } from '../list-item/entities/list-item.entity'
+import { List } from '../lists/entities/list.entity'
+import { User } from '../users/entities/user.entity'
+import { UsersService } from '../users/users.service'
 import { SEED_ITEMS, SEED_USERS } from './data/seed-data'
 
 const logger = new Logger('SeedService')
@@ -23,7 +25,13 @@ export class SeedService {
     private readonly itemsRepository: Repository<Item>,
 
     @InjectRepository(User)
-    private readonly usersRepository: Repository<User>
+    private readonly usersRepository: Repository<User>,
+
+    @InjectRepository(List)
+    private readonly listsRepository: Repository<List>,
+
+    @InjectRepository(ListItem)
+    private readonly listItemsRepository: Repository<ListItem>
   ) {
     this.isProd = configService.get('STATE') === 'prod'
   }
@@ -46,9 +54,15 @@ export class SeedService {
   }
 
   async deleteDatabase() {
-    //! Delete all items
+    //! Delete all list items table data
+    await this.listItemsRepository.createQueryBuilder().delete().where({}).execute()
+
+    //! Delete all list table data
+    await this.listsRepository.createQueryBuilder().delete().where({}).execute()
+
+    //! Delete all items table data
     await this.itemsRepository.createQueryBuilder().delete().where({}).execute()
-    //! Delete all users
+    //! Delete all users table data
     await this.usersRepository.createQueryBuilder().delete().where({}).execute()
   }
 
