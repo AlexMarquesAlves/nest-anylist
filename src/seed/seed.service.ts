@@ -12,11 +12,10 @@ import { User } from '../users/entities/user.entity'
 import { UsersService } from '../users/users.service'
 import { SEED_ITEMS, SEED_LISTS, SEED_USERS } from './data/seed-data'
 
-const logger = new Logger('SeedService')
-
 @Injectable()
 export class SeedService {
   private isProd: boolean
+  private logger = new Logger('SeedService')
 
   constructor(
     private readonly configService: ConfigService,
@@ -54,13 +53,13 @@ export class SeedService {
     await this.loadItems(user)
 
     // * Crear los datos de list ejemplo
-    await this.loadLists(user)
+    const list = await this.loadLists(user)
 
     // * Crear los datos de list items ejemplo
     const items = await this.itemsService.findAll(user, { limit: 15, offset: 0 }, {})
     await this.loadListItems(list, items)
 
-    logger.log('SeedService executed successfully')
+    this.logger.log('SeedService executed successfully')
     return true
   }
 
@@ -73,6 +72,7 @@ export class SeedService {
 
     //! Delete all items table data
     await this.itemsRepository.createQueryBuilder().delete().where({}).execute()
+
     //! Delete all users table data
     await this.usersRepository.createQueryBuilder().delete().where({}).execute()
   }
