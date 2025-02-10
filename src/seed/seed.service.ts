@@ -5,10 +5,12 @@ import { Repository } from 'typeorm'
 import { Item } from '../items/entities/item.entity'
 import { ItemsService } from '../items/items.service'
 import { ListItem } from '../list-item/entities/list-item.entity'
+import { ListItemService } from '../list-item/list-item.service'
 import { List } from '../lists/entities/list.entity'
+import { ListsService } from '../lists/lists.service'
 import { User } from '../users/entities/user.entity'
 import { UsersService } from '../users/users.service'
-import { SEED_ITEMS, SEED_USERS } from './data/seed-data'
+import { SEED_ITEMS, SEED_LISTS, SEED_USERS } from './data/seed-data'
 
 const logger = new Logger('SeedService')
 
@@ -20,6 +22,8 @@ export class SeedService {
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
     private readonly itemsService: ItemsService,
+    private readonly listsService: ListsService,
+    private readonly listItemService: ListItemService,
 
     @InjectRepository(Item)
     private readonly itemsRepository: Repository<Item>,
@@ -33,7 +37,7 @@ export class SeedService {
     @InjectRepository(ListItem)
     private readonly listItemsRepository: Repository<ListItem>
   ) {
-    this.isProd = configService.get('STATE') === 'prod'
+    this.isProd = this.configService.get('STATE') === 'prod'
   }
 
   async executeSeed(): Promise<boolean> {
@@ -48,6 +52,13 @@ export class SeedService {
 
     // * Crear los datos de items ejemplo
     await this.loadItems(user)
+
+    // * Crear los datos de list ejemplo
+    await this.loadLists(user)
+
+    // * Crear los datos de list items ejemplo
+    const items = await this.itemsService.findAll(user, { limit: 15, offset: 0 }, {})
+    await this.loadListItems(list, items)
 
     logger.log('SeedService executed successfully')
     return true
@@ -84,5 +95,29 @@ export class SeedService {
     }
 
     await Promise.all(itemsPromises)
+  }
+
+  async loadLists(user: User): Promise<List> {
+    const lists = []
+
+    for (const list of SEED_LISTS) {
+      lists.push(await this.listsService.create(list, user))
+    }
+
+    return lists[0]
+  }
+
+  async loadListItems(list: List, items: Item[]) {
+    const randomQuantity = Math.round(Math.random() * 10)
+    const randomCompleted = Math.round(Math.random() * 1) === 0 ? false : true
+
+    for (const item of items) {
+      this.listItemService.create({
+        quantity: randomQuantity,
+        completed: randomCompleted,
+        listId: list.id,
+        itemId: item.id,
+      })
+    }
   }
 }
