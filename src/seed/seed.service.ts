@@ -39,7 +39,7 @@ export class SeedService {
     this.isProd = this.configService.get('STATE') === 'prod'
   }
 
-  async executeSeed(): Promise<boolean> {
+  async executeSeed(): Promise<string | boolean> {
     if (this.isProd) {
       throw new UnauthorizedException('We cannot run SEED on production.')
     }
@@ -56,11 +56,11 @@ export class SeedService {
     const list = await this.loadLists(user)
 
     // * Crear los datos de list items ejemplo
-    const items = await this.itemsService.findAll(user, { limit: 15, offset: 0 }, {})
+    const items = await this.itemsService.findAll(user, { limit: 20, offset: 0 }, {})
     await this.loadListItems(list, items)
 
     this.logger.log('SeedService executed successfully')
-    return true
+    return 'SeedService executed successfully'
   }
 
   async deleteDatabase() {
@@ -108,13 +108,10 @@ export class SeedService {
   }
 
   async loadListItems(list: List, items: Item[]) {
-    const randomQuantity = Math.round(Math.random() * 10)
-    const randomCompleted = Math.round(Math.random() * 1) === 0 ? false : true
-
     for (const item of items) {
       this.listItemService.create({
-        quantity: randomQuantity,
-        completed: randomCompleted,
+        quantity: Math.round(Math.random() * 10),
+        completed: Math.round(Math.random() * 1) === 0 ? false : true,
         listId: list.id,
         itemId: item.id,
       })

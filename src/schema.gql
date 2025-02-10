@@ -80,7 +80,7 @@ type Mutation {
   updateListItem(updateListItemInput: UpdateListItemInput!): ListItem!
 
   """Seed the database with some data"""
-  Seed: Boolean!
+  Seed: String!
 }
 
 input SignupInput {
