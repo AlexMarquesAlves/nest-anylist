@@ -69,11 +69,11 @@ export class AppModule {
   private logger = new Logger('AppModule')
 
   constructor() {
-    this.logger.log('STATE', process.env.STATE)
-    this.logger.log('host', process.env.DB_HOST)
-    this.logger.log('port', +process.env.DB_PORT)
-    this.logger.log('username', process.env.DB_USERNAME)
-    this.logger.log('password', process.env.DB_PASSWORD)
-    this.logger.log('database', process.env.DB_NAME)
+    console.log('STATE', process.env.STATE)
+    console.log('host', process.env.DB_HOST)
+    console.log('port', +process.env.DB_PORT)
+    console.log('username', process.env.DB_USERNAME)
+    console.log('password', process.env.DB_PASSWORD)
+    console.log('database', process.env.DB_NAME)
   }
 }
