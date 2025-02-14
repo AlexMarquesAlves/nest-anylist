@@ -24,8 +24,10 @@ export class ListItemService {
       list: { id: listId },
     })
 
+    await this.listItemRepository.save(newListItem)
     this.logger.log(`New list item "${newListItem.id}" was successfully created`)
-    return this.listItemRepository.save(newListItem)
+
+    return this.findOne(newListItem.id)
   }
 
   async findAll(list: List, paginationArgs: PaginationArgs, searchArgs: SearchArgs) {
