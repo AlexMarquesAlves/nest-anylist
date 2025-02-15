@@ -63,7 +63,10 @@ export class ListsService {
 
   async update(id: string, updateListInput: UpdateListInput, user: User): Promise<List> {
     await this.findOne(id, user)
-    const list = await this.listsRepository.preload({ ...updateListInput, user })
+    const list = await this.listsRepository.preload({
+      ...updateListInput,
+      user,
+    })
 
     if (!list) {
       throw new NotFoundException(`List with id: ${id} not found`)
@@ -81,5 +84,11 @@ export class ListsService {
     this.logger.log(`Item with ID: ${id} was successfully removed`)
 
     return { ...list, id }
+  }
+
+  async listCountByUser(user: User): Promise<number> {
+    return this.listsRepository.count({
+      where: { user: { id: user.id } },
+    })
   }
 }

@@ -13,6 +13,7 @@ powerwall
 Powerwall
 pwsh
 spacefaring
+sslmode
 tabless
 teslo
 ultrasoft

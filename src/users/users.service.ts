@@ -102,11 +102,7 @@ export class UsersService {
     }
   }
 
-  async update(
-    id: string,
-    updateUserInput: UpdateUserInput,
-    updateBy: User
-  ): Promise<User> {
+  async update(id: string, updateUserInput: UpdateUserInput, updateBy: User): Promise<User> {
     try {
       const user = await this.usersRepository.preload({
         ...updateUserInput,

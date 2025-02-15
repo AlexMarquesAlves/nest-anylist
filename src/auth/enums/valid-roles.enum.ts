@@ -7,6 +7,5 @@ export enum ValidRoles {
 }
 registerEnumType(ValidRoles, {
   name: 'ValidRoles',
-  description:
-    'Ullamco labore ut ut adipisicing commodo sit elit ullamco eiusmod ut mollit sint.',
+  description: 'Ullamco labore ut ut adipisicing commodo sit elit ullamco eiusmod ut mollit sint.',
 })
